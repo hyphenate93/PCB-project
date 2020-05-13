@@ -8,6 +8,7 @@ import java.awt.geom.Point2D;
 /**
    This class defines arrowheads of various shapes.
 */
+
 public enum ArrowHead
 {
    NONE; //, TRIANGLE, BLACK_TRIANGLE, V, DIAMOND, BLACK_DIAMOND;
@@ -18,6 +19,7 @@ public enum ArrowHead
       @param p a point on the axis of the arrow head
       @param q the end point of the arrow head
    */
+
    public void draw(Graphics2D g2, Point2D p, Point2D q)
    {
       GeneralPath path = getPath(p, q);
@@ -57,3 +59,4 @@ public enum ArrowHead
    }
    
 }
+

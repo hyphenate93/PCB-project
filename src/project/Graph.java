@@ -3,8 +3,12 @@ package project;
 import java.awt.*;
 import java.awt.geom.*;
 import java.io.*;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.List;
+
+import javax.swing.JTextArea;
 
 
 /**
@@ -173,23 +177,112 @@ public abstract class Graph implements Serializable
       Gets the nodes of this graph.
       @return an unmodifiable list of the nodes
    */
-   public List<Node> getNodes()
-   {
-      return Collections.unmodifiableList(nodes); }
+    public List<Node> getNodes()
+    {
+    	return Collections.unmodifiableList(nodes); 
+    }
 
-   /**
-      Gets the edges of this graph.
-      @return an unmodifiable list of the edges
-   */
-   public List<Edge> getEdges()
-   {
-      return Collections.unmodifiableList(edges);
-   }
+    /**
+       Gets the edges of this graph.
+       @return an unmodifiable list of the edges
+    */
+    public List<Edge> getEdges()
+    {
+        return Collections.unmodifiableList(edges);
+    }
+   
+    public int countResistor() { 
+	    int resistorAmount = 0; 
+	    
+	    for (Node n : nodes)
+	    {
+	    	if(n.getComponent() == "Resistor") {
+	    		resistorAmount++;
+	    	}
+	    }     
+	    return resistorAmount;
+    }
+    
+    
+    public int countCapacitor() { 
+	    int capacitorAmount = 0; 
+	    
+	    for (Node n : nodes)
+	    {
+	    	if(n.getComponent() == "Capacitor"){
+	    		capacitorAmount++;
+	    	}
+	    }     
+	    return capacitorAmount;
+    }
+    
+    public JTextArea getText() {
+    	return text;
+    }
+        
+    public void updateText() {
+    	text.setBackground(Color.YELLOW);
+    	text.setFont(new Font("Segoe Script", Font.BOLD, 20));
+ 	   	text.setText("ShoppingList: \n\n\n" + getResistorAmount() +"x Resistor\n" 
+ 	   			+ getCapacitorAmount() +"x Capacitor\n\n\n\n\n\n\n\n\n\n"
+ 	   			+ "total cost: \n" + getPrice()+"$");
+    }
+    
+    public int getResistorAmount(){
+ 	   return this.resistorAmount;
+    }
 
-   private int boardSize  = 10;
-   private int squareSize = 50;
-   private ArrayList<Node> nodes;
-   private ArrayList<Edge> edges;
+    public int getComponentAmount(){  	
+  	   	int componentAmount = resistorAmount + capacitorAmount;
+  	   	return componentAmount;
+     }
+    
+    public void setResistorAmount(int amount) {
+ 	   this.resistorAmount = amount;
+    }
+
+    public int getCapacitorAmount(){
+ 	   return this.capacitorAmount;
+    }
+    
+    
+    public void setCapacitorAmount(int amount) {
+ 	   this.capacitorAmount = amount;
+    }
+    
+    
+    public String getPrice() {
+    	String price = "";
+    	if(total < 0.1) {
+    		return "0.00";
+    	}
+    	else {
+    		price = df.format(total);
+    		return price;
+    	}	
+    }
+    
+    
+    public void setPrice() {
+    	double price = 0.0; 
+	    for (Node n : nodes)
+	    {
+	    	if(n.getComponent() == "Resistor" || n.getComponent() == "Capacitor") {
+	    		price = price + n.getPrice();
+	    	}
+	    }  
+	    total = price;
+    }
+    
+    private double total = 0.0;
+    private int resistorAmount = 0;
+    private int capacitorAmount = 0;
+    private DecimalFormat df = new DecimalFormat("#.00");
+    private JTextArea text = new JTextArea(5,10); 
+    private int boardSize  = 10;
+    private int squareSize = 50;
+    private ArrayList<Node> nodes;
+    private ArrayList<Edge> edges;
 }
 
 

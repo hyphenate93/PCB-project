@@ -18,8 +18,11 @@ public class ToolBar extends JPanel
    {
       group = new ButtonGroup();
       tools = new ArrayList<Object>();
-      setLayout(new FlowLayout());
-
+      setLayout(new FlowLayout(FlowLayout.CENTER));
+//      GridBagConstraints gbc = new GridBagConstraints();
+//      gbc.anchor = GridBagConstraints.NORTH;
+//      gbc.weighty = 1;
+      
       JToggleButton grabberButton = new JToggleButton(new
          Icon()
          {
@@ -35,6 +38,7 @@ public class ToolBar extends JPanel
                GraphPanel.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + BUTTON_SIZE - OFFSET);
             }
          });
+      grabberButton.setToolTipText("Edit component");
       group.add(grabberButton);
       add(grabberButton);
       grabberButton.setSelected(true);
@@ -42,10 +46,10 @@ public class ToolBar extends JPanel
 
       Node[] components = (Node[]) graph.getNodePrototypes();
       for (Node n : components)
-         add(n);
+         add(n, n.getComponent());
       Edge[] edgeTypes = (Edge[]) graph.getEdgePrototypes();
       for (Edge e : edgeTypes)
-         add(e);
+         add(e, "Wire");
    }
 
    /**
@@ -68,7 +72,7 @@ public class ToolBar extends JPanel
       Adds a node to the tool bar.
       @param n the node to add
    */
-   public void add(final Node n)
+   public void add(final Node n, String tooltip)
    {
       JToggleButton button = new JToggleButton(new
          Icon()
@@ -94,6 +98,7 @@ public class ToolBar extends JPanel
                g2.setTransform(oldTransform);
             }
          });
+      button.setToolTipText(tooltip);
       group.add(button);
       add(button);
       tools.add(n);
@@ -103,7 +108,7 @@ public class ToolBar extends JPanel
       Adds an edge to the tool bar.
       @param n the edge to add
    */
-   public void add(final Edge e)
+   public void add(final Edge e, String tooltip)
    {
       JToggleButton button = new JToggleButton(new
          Icon()
@@ -125,11 +130,17 @@ public class ToolBar extends JPanel
                g2.translate(-x, -y);
             }
          });
+      button.setToolTipText(tooltip);
       group.add(button);
       add(button);
       tools.add(e);
    }
 
+   public Dimension getPreferredSize() {
+	   return new Dimension(100, 100);
+   }
+   
+   
    private ButtonGroup group;
    private ArrayList<Object> tools;
 

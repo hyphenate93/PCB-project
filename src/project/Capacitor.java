@@ -6,6 +6,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.math.BigDecimal;
 
 public class Capacitor implements Node {
 	  /**
@@ -14,6 +15,8 @@ public class Capacitor implements Node {
  */
  public Capacitor(Color aColor)
  {
+	component = "Capacitor";
+	price = 10.99;
     size = DEFAULT_SIZE;
     x = 0;
     y = 0;
@@ -94,9 +97,23 @@ public class Capacitor implements Node {
           centerY + dy * (size / 2) / distance);
  }
 
- private double x;
- private double y;
- private double size;
- private Color color;  
- private static final int DEFAULT_SIZE = 20;
+ 	public String getComponent() {
+	 	return component;
+	 }
+
+ 	 public double getPrice() {
+ 		 return price;
+ 	 }
+ 	 
+ 	public void setPrice(double cost) {
+		 price = cost;
+	 }
+
+ 	 private String component;
+ 	 private double price;
+ 	 private double x;
+ 	 private double y;
+ 	 private double size;
+ 	 private Color color;  
+ 	 private static final int DEFAULT_SIZE = 20;
 }

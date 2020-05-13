@@ -14,6 +14,8 @@ public class Resistor implements Node {
  */
  public Resistor(Color aColor)
  {
+	component = "Resistor"; 
+	price = 4.99;
     size = DEFAULT_SIZE;
     x = 0;
     y = 0;
@@ -92,10 +94,22 @@ public class Resistor implements Node {
           centerX + dx * (size / 2) / distance,
           centerY + dy * (size / 2) / distance);
  }
+ 
 
+ public String getComponent() {
+ 	return component;
+ }
+ 
+ public double getPrice() {
+	 return price;
+ }
+
+ private String component;
+ private double price;
  private double x;
  private double y;
  private double size;
  private Color color;  
  private static final int DEFAULT_SIZE = 20;
+
 }

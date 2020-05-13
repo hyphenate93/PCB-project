@@ -132,6 +132,16 @@ public class ClassNode extends RectangularNode
    {
       return methods;
    }
+   
+   @Override
+   public String getComponent() {
+   	// TODO Auto-generated method stub
+   	return null;
+   }
+   
+   public double getPrice() {
+	   return 0.0;
+   }
 
    public Object clone()
    {
@@ -151,4 +161,5 @@ public class ClassNode extends RectangularNode
    private static int DEFAULT_COMPARTMENT_HEIGHT = 20;
    private static int DEFAULT_WIDTH = 80;
    private static int DEFAULT_HEIGHT = 60;
+
 }

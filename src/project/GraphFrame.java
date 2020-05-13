@@ -98,6 +98,8 @@ public class GraphFrame extends JFrame
       toolBar = new ToolBar(graph);
       panel = new GraphPanel(toolBar, graph);
       scrollPane = new JScrollPane(panel);
+      graph.updateText();
+      this.add(graph.getText(), BorderLayout.EAST);
       this.add(toolBar, BorderLayout.WEST);
       this.add(scrollPane, BorderLayout.CENTER);
    }
@@ -165,6 +167,7 @@ public class GraphFrame extends JFrame
       }
    }
 
+   
    private Graph graph;
    private GraphPanel panel;
    private JScrollPane scrollPane;

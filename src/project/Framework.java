@@ -16,4 +16,3 @@ public class Framework
       frame.setVisible(true);
    }
 }
-

@@ -4,9 +4,7 @@ import java.awt.Color;
 import java.awt.geom.*;
 
 
-/**
-   A UML class diagram.
-*/
+
 public class ClassDiagramGraph extends Graph
 {
 
@@ -33,7 +31,7 @@ public class ClassDiagramGraph extends Graph
 
       e[0] = new ClassRelationshipEdge();
       e[0].setBentStyle(BentStyle.HVH);
-      e[0].setEndArrowHead(ArrowHead.NONE);
+//      e[0].setEndArrowHead(ArrowHead.NONE);
 
       return e;
   }

@@ -54,6 +54,20 @@ public class PointNode implements Node
          return null;
       }
    }
+   
+   @Override
+   public String getComponent() {
+   	// TODO Auto-generated method stub
+   	return null;
+   }
+   
+   
+   @Override
+   public double getPrice() {
+   	// TODO Auto-generated method stub
+   	return 0.0;
+   }
 
    private Point2D point;
+   
 }

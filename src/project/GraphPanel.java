@@ -48,7 +48,7 @@ public class GraphPanel extends JComponent
                      selected = null;
                   }
                }
-               else if (tool instanceof Node && graph.findNode(mousePoint)==null)
+               else if (tool instanceof Node && graph.findNode(mousePoint)==null && (graph.getComponentAmount() < 15))
                {
                   Node prototype = (Node) tool;
                   Node newNode = (Node) prototype.clone();
@@ -58,6 +58,10 @@ public class GraphPanel extends JComponent
                      selected = newNode;
                      dragStartPoint = mousePoint;
                      dragStartBounds = newNode.getBounds();
+                     graph.setResistorAmount(graph.countResistor());
+                     graph.setCapacitorAmount(graph.countCapacitor());
+                     graph.setPrice();
+                     graph.updateText();
                   }
                   else if (n != null)
                   {
@@ -161,6 +165,10 @@ public class GraphPanel extends JComponent
       if (selected instanceof Node)
       {
          graph.removeNode((Node) selected);
+         graph.setResistorAmount(graph.countResistor());
+         graph.setCapacitorAmount(graph.countCapacitor());
+         graph.setPrice();
+         graph.updateText();
       }
       else if (selected instanceof Edge)
       {
@@ -214,6 +222,7 @@ public class GraphPanel extends JComponent
          (int) bounds.getMaxX(), 
          (int) bounds.getMaxY());
    }
+   
 
    private Graph graph;
    private ToolBar toolBar;

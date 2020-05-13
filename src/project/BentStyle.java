@@ -27,8 +27,6 @@ public enum BentStyle
 
       if (this == HVH) r = getPath(VHV, start, end);
       else if (this == VHV) r = getPath(HVH, start, end);
-//      else if (this == HV) r = getPath(VH, start, end);
-//      else if (this == VH) r = getPath(HV, start, end);
       if (r != null) return r;
 
       return getPath(STRAIGHT, start, end);
@@ -82,47 +80,7 @@ public enum BentStyle
          r.add(p);
          r.add(q);
       }
-/*      else if (bent == HV)
-      {
-         double x1;
-         double x2 = e.getCenterX();
-         double y1 = s.getCenterY();
-         double y2;
-         if (x2 + MIN_SEGMENT <= s.getX())
-            x1 = s.getX();
-         else if (x2 - MIN_SEGMENT >= s.getMaxX())
-            x1 = s.getMaxX();
-         else return null;
-         if (y1 + MIN_SEGMENT <= e.getY())
-            y2 = e.getY();
-         else if (y1 - MIN_SEGMENT >= e.getMaxY())
-            y2 = e.getMaxY();
-         else return null;
-         r.add(new Point2D.Double(x1, y1));
-         r.add(new Point2D.Double(x2, y1));
-         r.add(new Point2D.Double(x2, y2));
-      }
-      else if (bent == VH)
-      {
-         double x1 = s.getCenterX();
-         double x2;
-         double y1;
-         double y2 = e.getCenterY();
-         if (x1 + MIN_SEGMENT <= e.getX())
-            x2 = e.getX();
-         else if (x1 - MIN_SEGMENT >= e.getMaxX())
-            x2 = e.getMaxX();
-         else return null;
-         if (y2 + MIN_SEGMENT <= s.getY())
-            y1 = s.getY();
-         else if (y2 - MIN_SEGMENT >= s.getMaxY())
-            y1 = s.getMaxY();
-         else return null;
-         r.add(new Point2D.Double(x1, y1));
-         r.add(new Point2D.Double(x1, y2));
-         r.add(new Point2D.Double(x2, y2));
-      }
-*/      else if (bent == HVH)
+      	else if (bent == HVH)
       {
          double x1;
          double x2;

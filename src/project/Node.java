@@ -44,7 +44,12 @@ public interface Node extends Serializable, Cloneable
       Get the bounding rectangle of the shape of this node
       @return the bounding rectangle
    */
+   
    Rectangle2D getBounds();
 
+   String getComponent();
+   
+   double getPrice();
+   
    Object clone();
 }
