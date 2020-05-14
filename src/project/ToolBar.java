@@ -19,9 +19,6 @@ public class ToolBar extends JPanel
       group = new ButtonGroup();
       tools = new ArrayList<Object>();
       setLayout(new FlowLayout(FlowLayout.CENTER));
-//      GridBagConstraints gbc = new GridBagConstraints();
-//      gbc.anchor = GridBagConstraints.NORTH;
-//      gbc.weighty = 1;
       
       JToggleButton grabberButton = new JToggleButton(new
          Icon()
@@ -38,11 +35,35 @@ public class ToolBar extends JPanel
                GraphPanel.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + BUTTON_SIZE - OFFSET);
             }
          });
-      grabberButton.setToolTipText("Edit component");
+      grabberButton.setToolTipText("Move component");
       group.add(grabberButton);
       add(grabberButton);
       grabberButton.setSelected(true);
       tools.add(null);
+      
+ /*     
+      JButton flipButton = new JButton(new
+    		  Icon()
+    	      {
+    	  		public int getIconHeight() { return BUTTON_SIZE; }
+    	  		public int getIconWidth() { return BUTTON_SIZE; }
+    	  		public void paintIcon(Component c, Graphics g,
+    	  		int x, int y)
+    	  		{
+    	               Graphics2D g2 = (Graphics2D) g;
+    	               GraphPanel.drawGrabber(g2, x + OFFSET, y + OFFSET);
+    	               GraphPanel.drawGrabber(g2, x + OFFSET, y + BUTTON_SIZE - OFFSET);
+    	               GraphPanel.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + OFFSET);
+    	               GraphPanel.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + BUTTON_SIZE - OFFSET);
+    	            }
+    	         });
+    	      flipButton.setToolTipText("Flip component");
+    	      group.add(flipButton);
+    	      add(flipButton);
+    	      flipButton.setSelected(true);
+    	      tools.add(null);
+*/      
+      
 
       Node[] components = (Node[]) graph.getNodePrototypes();
       for (Node n : components)

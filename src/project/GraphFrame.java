@@ -83,7 +83,8 @@ public class GraphFrame extends JFrame
                panel.editSelected();
             }
          });
-
+      
+   
       JMenu editMenu = new JMenu("Edit");
       editMenu.add(deleteItem);
       editMenu.add(propertiesItem);
@@ -98,6 +99,7 @@ public class GraphFrame extends JFrame
       toolBar = new ToolBar(graph);
       panel = new GraphPanel(toolBar, graph);
       scrollPane = new JScrollPane(panel);
+      graph.setupText();
       graph.updateText();
       this.add(graph.getText(), BorderLayout.EAST);
       this.add(toolBar, BorderLayout.WEST);

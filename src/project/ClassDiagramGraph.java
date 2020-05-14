@@ -21,7 +21,8 @@ public class ClassDiagramGraph extends Graph
 	   Node[] components =
 	         {
 	            new Resistor(Color.WHITE),
-	            new Capacitor(Color.WHITE)};  
+	            new Capacitor(Color.WHITE),
+	            new Inductor(Color.WHITE)};  
       return components;
    }
 

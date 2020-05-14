@@ -191,65 +191,90 @@ public abstract class Graph implements Serializable
         return Collections.unmodifiableList(edges);
     }
    
-    public int countResistor() { 
-	    int resistorAmount = 0; 
-	    
-	    for (Node n : nodes)
-	    {
-	    	if(n.getComponent() == "Resistor") {
-	    		resistorAmount++;
-	    	}
-	    }     
-	    return resistorAmount;
-    }
-    
-    
-    public int countCapacitor() { 
-	    int capacitorAmount = 0; 
-	    
-	    for (Node n : nodes)
-	    {
-	    	if(n.getComponent() == "Capacitor"){
-	    		capacitorAmount++;
-	    	}
-	    }     
-	    return capacitorAmount;
-    }
     
     public JTextArea getText() {
     	return text;
     }
         
-    public void updateText() {
+    public void setupText() {
     	text.setBackground(Color.YELLOW);
+    	text.setLineWrap(true);
+    	text.setEditable(false);
     	text.setFont(new Font("Segoe Script", Font.BOLD, 20));
- 	   	text.setText("ShoppingList: \n\n\n" + getResistorAmount() +"x Resistor\n" 
- 	   			+ getCapacitorAmount() +"x Capacitor\n\n\n\n\n\n\n\n\n\n"
- 	   			+ "total cost: \n" + getPrice()+"$");
+    }
+    
+    public void updateText() {
+ 	   	text.setText("ShoppingList: \n\n\n" 
+ 	   				+ resistorAmount + "x Resistor\n"
+ 	   			    + capacitorAmount + "x Capacitor\n"
+ 	   				+ inductorAmount + "x Inductor\n\n\n\n\n\n\n\n\n\n"
+ 	   				+ "total cost: \n" + getPrice()+"$");
     }
     
     public int getResistorAmount(){
- 	   return this.resistorAmount;
+ 	    return this.resistorAmount;
     }
 
     public int getComponentAmount(){  	
-  	   	int componentAmount = resistorAmount + capacitorAmount;
-  	   	return componentAmount;
+  	   	 int componentAmount = resistorAmount + capacitorAmount + inductorAmount;
+  	   	 return componentAmount;
      }
     
     public void setResistorAmount(int amount) {
- 	   this.resistorAmount = amount;
+ 	    this.resistorAmount = amount;
     }
 
     public int getCapacitorAmount(){
- 	   return this.capacitorAmount;
+ 	    return this.capacitorAmount;
     }
     
     
     public void setCapacitorAmount(int amount) {
- 	   this.capacitorAmount = amount;
+ 	    this.capacitorAmount = amount;
     }
     
+    public int getInductorAmount(){
+    	 return this.inductorAmount;
+     }
+     
+     
+     public void setInductorAmount(int amount) {
+  	     this.inductorAmount = amount;
+     }
+      
+     public void setAmount() { 
+ 	    int resistor = 0; 
+ 	    int capacitor = 0; 
+ 	    int inductor = 0; 
+ 	    for (Node n : nodes)
+ 	    {
+ 	    	if(n.getComponent() == "Resistor") {
+ 	    		resistor++;
+ 	    	}
+ 	    	else if(n.getComponent() == "Capacitor") {
+ 	    		capacitor++;
+ 	    	}
+ 	    	else if(n.getComponent() == "Inductor") {
+ 	    		inductor++;
+ 	    	}
+ 	    }     
+ 	    resistorAmount = resistor;
+ 	    capacitorAmount = capacitor;
+ 	    inductorAmount = inductor;
+     }
+     
+     public void addAmount(String component) {
+     	if(component == "Resistor"){
+     		resistorAmount++;
+     	}
+     	else if(component == "Capacitor"){
+     		capacitorAmount++;
+     	}
+     	else if(component == "Inductor"){
+     		inductorAmount++;
+     	}
+     }
+     
     
     public String getPrice() {
     	String price = "";
@@ -262,12 +287,14 @@ public abstract class Graph implements Serializable
     	}	
     }
     
-    
-    public void setPrice() {
+    public void updatePrice() {
     	double price = 0.0; 
 	    for (Node n : nodes)
 	    {
-	    	if(n.getComponent() == "Resistor" || n.getComponent() == "Capacitor") {
+	    	if(n.getComponent() == "Resistor" 
+	    			|| n.getComponent() == "Capacitor" 
+	    			|| n.getComponent() == "Inductor") {
+	    		
 	    		price = price + n.getPrice();
 	    	}
 	    }  
@@ -277,6 +304,7 @@ public abstract class Graph implements Serializable
     private double total = 0.0;
     private int resistorAmount = 0;
     private int capacitorAmount = 0;
+    private int inductorAmount = 0;
     private DecimalFormat df = new DecimalFormat("#.00");
     private JTextArea text = new JTextArea(5,10); 
     private int boardSize  = 10;
@@ -284,8 +312,3 @@ public abstract class Graph implements Serializable
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
 }
-
-
-
-
-

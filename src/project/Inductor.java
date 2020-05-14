@@ -8,18 +8,19 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 
-public class Capacitor implements Node {
+public class Inductor implements Node {
 
 	
 	
-	public Capacitor(Color aColor)
+	public Inductor(Color aColor)
 	{
-		component = "Capacitor";
+		component = "Inductor";
 		price = 4.55;
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
 		color = aColor;
+		orientation = "horizontal";
 	}
 
 	public void setColor(Color aColor)
@@ -47,32 +48,32 @@ public class Capacitor implements Node {
 	public void draw(Graphics2D g2)
 	{
 		if(orientation == "vertical") {
-			Line2D.Double line1 = new Line2D.Double();
-			line1.setLine(x, y+size, x+size-5, y+size);
-			Line2D.Double line2 = new Line2D.Double();
-			line2.setLine(x+size+5, y+size, x+size*2, y+size);
-			Line2D.Double line3 = new Line2D.Double();
-			line3.setLine(x+size-5, y+size*1.5, x+size-5, y+size/2);
-			Line2D.Double line4 = new Line2D.Double();
-			line4.setLine(x+size+5, y+size*1.5, x+size+5, y+size/2);
-			g2.draw(line1);
-			g2.draw(line2);
-			g2.draw(line3);
-			g2.draw(line4);
-		} 
+			Ellipse2D e1 = new Ellipse2D.Double(
+		          		x, y, size, size*2);
+			Ellipse2D e2 = new Ellipse2D.Double(
+						x+size/3, y, size, size*2);
+			Ellipse2D e3 = new Ellipse2D.Double(
+						x+2*size/3, y, size, size*2);
+			Ellipse2D e4 = new Ellipse2D.Double(
+						x+size, y, size, size*2);
+			g2.draw(e1);
+			g2.draw(e2);
+			g2.draw(e3);
+			g2.draw(e4);
+		}
 		else {
-			Line2D.Double line1 = new Line2D.Double();
-			line1.setLine(x, y+size, x+size-5, y+size);
-			Line2D.Double line2 = new Line2D.Double();
-			line2.setLine(x+size+5, y+size, x+size*2, y+size);
-			Line2D.Double line3 = new Line2D.Double();
-			line3.setLine(x+size-5, y+size*1.5, x+size-5, y+size/2);
-			Line2D.Double line4 = new Line2D.Double();
-			line4.setLine(x+size+5, y+size*1.5, x+size+5, y+size/2);
-			g2.draw(line1);
-			g2.draw(line2);
-			g2.draw(line3);
-			g2.draw(line4);
+			Ellipse2D e1 = new Ellipse2D.Double(
+						x, y, size, size*2);
+			Ellipse2D e2 = new Ellipse2D.Double(
+						x+size/3, y, size, size*2);
+			Ellipse2D e3 = new Ellipse2D.Double(
+						x+2*size/3, y, size, size*2);
+			Ellipse2D e4 = new Ellipse2D.Double(
+						x+size, y, size, size*2);
+			g2.draw(e1);
+			g2.draw(e2);
+			g2.draw(e3);
+			g2.draw(e4);
 		}
 	}
 
@@ -85,7 +86,7 @@ public class Capacitor implements Node {
 	public boolean contains(Point2D p)
 	{
 		Rectangle2D rectangle = new Rectangle2D.Double(
-	    		x, y+size/2, size*2, size);
+	    			x, y+size/2, size*2, size*2);
 	    return rectangle.contains(p);
 	}
 
