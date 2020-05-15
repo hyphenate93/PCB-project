@@ -97,18 +97,11 @@ public abstract class Graph implements Serializable
    */
    public void draw(Graphics2D g2)
    {
-	   g2.setColor( Color.BLACK );
-       g2.drawRect( 0, 0, boardSize * squareSize, boardSize * squareSize);
-
-       // paint the black squares
+	   g2.setColor( Color.GREEN );
+       g2.fillRect( 0, 0, squareSize * 12, squareSize* 5);
        g2.setColor( Color.BLACK );
-       for ( int row = 0; row < boardSize; row++ )
-       {
-           for ( int col = row % 2; col < boardSize; col += 2 )
-           {
-               g2.drawRect( row * squareSize, col * squareSize, squareSize, squareSize );
-           }
-       }
+       g2.drawRect( 0, 0, squareSize * 12, squareSize* 5);
+   
        g2.setColor( Color.BLACK );
       for (Node n : nodes)
          n.draw(g2);

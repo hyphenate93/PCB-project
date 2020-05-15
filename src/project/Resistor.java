@@ -124,7 +124,18 @@ public class Resistor implements Node {
 			orientation = "horizontal";
 		}
  	}
-
+	public double getX() {
+		return x;
+	}
+	public double getY() {
+		return y;
+	}
+	public void setX(double x) {
+		this.x = x;
+	}
+public void setY(double y) {
+	this.y = y;
+}
  	private String component;
  	private String orientation;
  	private double price;

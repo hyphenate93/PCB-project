@@ -161,5 +161,28 @@ public class ClassNode extends RectangularNode
    private static int DEFAULT_COMPARTMENT_HEIGHT = 20;
    private static int DEFAULT_WIDTH = 80;
    private static int DEFAULT_HEIGHT = 60;
+@Override
+public double getX() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+@Override
+public double getY() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+@Override
+public void setX(double a) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void setY(double a) {
+	// TODO Auto-generated method stub
+	
+}
 
 }
