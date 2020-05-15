@@ -100,22 +100,8 @@ public class GraphFrame extends JFrame
       toolBar = new ToolBar(graph);
       panel = new GraphPanel(toolBar, graph);
       scrollPane = new JScrollPane(panel);
-      Point2D.Double xy = new Point2D.Double(5,5);
-      Resistor test = new Resistor(Color.white);
-      
-      Point2D.Double xy2 = new Point2D.Double(55,5);
-      Point2D.Double xy3 = new Point2D.Double(105,5);
-      Point2D.Double xylast = new Point2D.Double(455,5);
-      Resistor test2 = new Resistor(Color.white);
-      Resistor test3 = new Resistor(Color.white);
-      Resistor testlast = new Resistor(Color.white);
       graph.setupText();
       graph.updateText();
-      graph.add(test, xy);
-      graph.add(test2, xy2);
-      graph.add(test3,xy3);
-      graph.add(testlast,xylast);
-      
       this.add(graph.getText(), BorderLayout.EAST);
       this.add(toolBar, BorderLayout.WEST);
       this.add(scrollPane, BorderLayout.CENTER);

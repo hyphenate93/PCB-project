@@ -62,6 +62,21 @@ public class Inductor implements Node {
 			g2.draw(e4);
 		}
 		else {
+			g2.setColor(Color.DARK_GRAY);
+			g2.fillRoundRect((int)x+4, (int)y+11, (int)size*2-8, (int)(size-1)/2, 2, 2);
+			g2.setColor(Color.BLACK);
+			for(int i = 0; i < 8; i++){
+				Ellipse2D el = new Ellipse2D.Double(
+						x+3+4*i, y+10, 5, size/2);
+				g2.draw(el);
+			}
+			Line2D.Double line1 = new Line2D.Double();
+			line1.setLine(x-6, y+size, x+7, y+size/2);
+			Line2D.Double line2 = new Line2D.Double();
+			line2.setLine(x+37, y+5+size/2, x+size*2+6, y+size);
+			g2.draw(line1);
+			g2.draw(line2);
+			/*
 			Ellipse2D e1 = new Ellipse2D.Double(
 						x, y, size, size*2);
 			Ellipse2D e2 = new Ellipse2D.Double(
@@ -74,6 +89,7 @@ public class Inductor implements Node {
 			g2.draw(e2);
 			g2.draw(e3);
 			g2.draw(e4);
+			*/
 		}
 	}
 
@@ -86,7 +102,7 @@ public class Inductor implements Node {
 	public boolean contains(Point2D p)
 	{
 		Rectangle2D rectangle = new Rectangle2D.Double(
-	    			x, y+size/2, size*2, size*2);
+	    			x, y, size*2, size*2);
 	    return rectangle.contains(p);
 	}
 

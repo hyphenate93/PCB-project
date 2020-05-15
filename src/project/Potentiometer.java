@@ -8,18 +8,19 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 
-public class Capacitor implements Node {
+public class Potentiometer implements Node {
 
 	
 	
-	public Capacitor(Color aColor)
+	public Potentiometer(Color aColor)
 	{
-		component = "Capacitor";
+		component = "Potentiometer";
 		price = 4.55;
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
 		color = aColor;
+		price = 7.99;
 	}
 
 	public void setColor(Color aColor)
@@ -59,17 +60,17 @@ public class Capacitor implements Node {
 		} 
 		else {
 			
-			Ellipse2D.Double base = new Ellipse2D.Double(x+13, y, 14, 14);
-			Line2D.Double line1 = new Line2D.Double();
-			line1.setLine(x-7, y+size, x+size-6, y+size/2);
-			Line2D.Double line2 = new Line2D.Double();
-			line2.setLine(x+size+6, y+size/2, x+size*2+7, y+size);
-			g2.setColor(new Color(255, 150, 50));
-			g2.fill(base);
 			g2.setColor(Color.BLACK);
-			g2.draw(base);
-			g2.draw(line1);
-			g2.draw(line2);
+			g2.fillRoundRect((int)x-1, (int)y-1, (int)(size+2)*2, (int)(size+2)*2, 10, 10);
+			g2.setColor(this.color);
+			g2.fillRoundRect((int)x, (int)y, (int)size*2, (int)size*2, 10, 10);
+//			Rectangle2D.Double base = new Rectangle2D.Double(x, y, size*2, size*2);
+			Rectangle2D.Double ok = new Rectangle2D.Double(x+18, y+10, 5, 18);
+			Ellipse2D.Double circle = new Ellipse2D.Double(x+5, y+5, 30, 30);
+//			g2.fill(base);
+			g2.setColor(Color.BLACK);
+			g2.draw(ok);
+			g2.draw(circle);
 		}
 	}
 
@@ -146,3 +147,4 @@ public void setY(double y) {
  	 private Color color;  
  	 private static final int DEFAULT_SIZE = 20;
 }
+

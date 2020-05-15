@@ -58,8 +58,7 @@ public class GraphPanel extends JComponent {
                   
                   boolean added = graph.add(newNode, mousePoint);
                   if (added)
-                  {
-                	  
+                  { 
                      selected = newNode;
                      dragStartPoint = mousePoint;
                      dragStartBounds = newNode.getBounds();
@@ -88,11 +87,10 @@ public class GraphPanel extends JComponent {
                Object tool = toolBar.getSelectedTool();
                Point2D mousePoint = event.getPoint();
                Node n = (Node) selected;
-               Rectangle2D bounds = n.getBounds();
+           
                if (rubberBandStart != null)
                {
-                  
-                  
+                   
                   Edge prototype = (Edge) tool;
                   Edge newEdge = (Edge) prototype.clone(); 
                   if (graph.connect(newEdge, 
@@ -100,11 +98,13 @@ public class GraphPanel extends JComponent {
                      selected = newEdge;
                }
              
-               if(mousePoint.getX() >= 5 && mousePoint.getX() < 705 && mousePoint.getY() > 0 && mousePoint.getY()  < 505) {
-            	   int moveX = (int) Math.floor((n.getX() + (double) 50 / 2) / 50) * 50;
-            	   int moveY = (int) Math.floor((n.getY() + (double) 50 / 2) / 50) * 50;
-//               n.setX(((mousePoint.getX()+49)/50 * 50)+5);
-//               n.setY(((mousePoint.getY()+49)/50 * 50)+5);
+               if(selected != null && mousePoint.getX() >= 105 
+            		   && mousePoint.getX() < 705 
+            		   && mousePoint.getY() > 55 
+            		   && mousePoint.getY()  < 555) {
+            	   
+            	   int moveX = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
+                   int moveY = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
             	   n.setX(moveX+5);
             	   n.setY(moveY+5);
                }
@@ -125,12 +125,11 @@ public class GraphPanel extends JComponent {
             {
                Point2D mousePoint = event.getPoint();
                Node n = (Node) selected;
-               Rectangle2D bounds = n.getBounds();
                if (dragStartBounds != null)
                {
                   if (selected instanceof Node)
-                  {
-                     
+                  {    
+                	 Rectangle2D bounds = n.getBounds();
                      n.translate(
                         dragStartBounds.getX() - bounds.getX() 
                         + mousePoint.getX() - dragStartPoint.getX(),
@@ -139,15 +138,10 @@ public class GraphPanel extends JComponent {
                   }
                }
                lastMousePoint = mousePoint;
-               
-              
-             
-              
-              	repaint();
-                }
-                
-            
-         }  );
+                  
+               repaint();
+               }    
+         });
    }
 
 	public void paintComponent(Graphics g) {

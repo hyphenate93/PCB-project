@@ -97,17 +97,31 @@ public abstract class Graph implements Serializable
    */
    public void draw(Graphics2D g2)
    {
-	   g2.setColor( Color.GREEN );
-       g2.fillRect( 0, 0, squareSize * 12, squareSize* 5);
+	   g2.setColor(new Color(0,160,0));
+       g2.fillRect( 50, 50, squareSize * 14, squareSize* 10);
        g2.setColor( Color.BLACK );
-       g2.drawRect( 0, 0, squareSize * 12, squareSize* 5);
-   
-       g2.setColor( Color.BLACK );
-      for (Node n : nodes)
-         n.draw(g2);
+       g2.drawRect( 50, 50, squareSize * 14, squareSize* 10);
+       for(int i = 0; i < 13; i++) {
+    	   for(int j = 0; j < 10; j++) {
+//    		   if(i < 1){
+    			   g2.setColor(new Color(198, 165, 48));
+    			   g2.fillRoundRect(97 + squareSize*i, 72 + squareSize*j, 7, 7, 3, 3);  			   
+    			   g2.setColor(Color.BLACK);
+    			   g2.fillRoundRect(98 + squareSize*i, 73 + squareSize*j, 4, 4, 3, 3);
+//    		   }
+//    		   if(j < 8){
+//    			   g2.setColor(new Color(198, 165, 48));
+//    			   g2.fillRoundRect(72 + squareSize*i, 97 + squareSize*j, 7, 7, 3, 3);
+//    			   g2.setColor(Color.BLACK);
+//    			   g2.fillRoundRect(73 + squareSize*i, 98 + squareSize*j, 4, 4, 3, 3);
+//    		   }
+    	   }
+       }
+       for (Node n : nodes)
+    	   n.draw(g2);
 
-      for (Edge e : edges)
-         e.draw(g2);
+       for (Edge e : edges)
+    	   e.draw(g2);
 
    }
 
@@ -200,7 +214,8 @@ public abstract class Graph implements Serializable
  	   	text.setText("ShoppingList: \n\n\n" 
  	   				+ resistorAmount + "x Resistor\n"
  	   			    + capacitorAmount + "x Capacitor\n"
- 	   				+ inductorAmount + "x Inductor\n\n\n\n\n\n\n\n\n\n"
+ 	   				+ inductorAmount + "x Inductor\n"
+ 	   				+ potAmount + "x Potentiometer\n\n\n\n\n\n\n\n\n"
  	   				+ "total cost: \n" + getPrice()+"$");
     }
     
@@ -239,6 +254,7 @@ public abstract class Graph implements Serializable
  	    int resistor = 0; 
  	    int capacitor = 0; 
  	    int inductor = 0; 
+ 	    int potentiometer = 0; 
  	    for (Node n : nodes)
  	    {
  	    	if(n.getComponent() == "Resistor") {
@@ -254,6 +270,7 @@ public abstract class Graph implements Serializable
  	    resistorAmount = resistor;
  	    capacitorAmount = capacitor;
  	    inductorAmount = inductor;
+ 	    potAmount = potentiometer;
      }
      
      public void addAmount(String component) {
@@ -266,6 +283,9 @@ public abstract class Graph implements Serializable
      	else if(component == "Inductor"){
      		inductorAmount++;
      	}
+     	else if(component == "Potentiometer"){
+     		potAmount++;
+     	}	
      }
      
     
@@ -286,7 +306,8 @@ public abstract class Graph implements Serializable
 	    {
 	    	if(n.getComponent() == "Resistor" 
 	    			|| n.getComponent() == "Capacitor" 
-	    			|| n.getComponent() == "Inductor") {
+	    			|| n.getComponent() == "Inductor" 
+	    			|| n.getComponent() == "Potentiometer") {
 	    		
 	    		price = price + n.getPrice();
 	    	}
@@ -298,9 +319,9 @@ public abstract class Graph implements Serializable
     private int resistorAmount = 0;
     private int capacitorAmount = 0;
     private int inductorAmount = 0;
+    private int potAmount = 0;
     private DecimalFormat df = new DecimalFormat("#.00");
     private JTextArea text = new JTextArea(5,10); 
-    private int boardSize  = 10;
     private int squareSize = 50;
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;

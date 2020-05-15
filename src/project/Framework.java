@@ -12,7 +12,7 @@ public class Framework
 {
    public static void main(String[] args)
    {
-      JFrame frame = new GraphFrame(new ClassDiagramGraph());
+      JFrame frame = new GraphFrame(new ComponentGraph());
       frame.setVisible(true);
    }
 }

@@ -61,17 +61,22 @@ public class Resistor implements Node {
 			g2.draw(rectangle);
 		}
 		else {
-			Rectangle2D rectangle = new Rectangle2D.Double(
-					x, y+size/2, size*2, size);
+			
 			Line2D.Double line1
 			= new Line2D.Double();
-			line1.setLine(x-5, y+size, x+size+25, y+size);
+			line1.setLine(x-6, y+size, x+size+26, y+size);
 			g2.draw(line1);
+			g2.fillRoundRect((int)x-1, (int)y-1+15, 2+(int)size*2, 2+(int)size/2, 10, 10);
 			Color oldColor = g2.getColor();
 			g2.setColor(color);
-			g2.fill(rectangle);
+//			g2.fill(rectangle);
+			g2.fillRoundRect((int)x, (int)y+15, (int)size*2, (int)size/2, 10, 10);
 			g2.setColor(oldColor);
-			g2.draw(rectangle);
+			g2.fillRoundRect((int)x+10, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
+			g2.fillRoundRect((int)x+25, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
+			g2.fillRoundRect((int)x+30, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
+//			g2.draw(rectangle);
+//			g2.fillRoundRect((int)x-2, (int)y-2+(int)size/2, (int)size*+4, (int)size+4, 10, 10);
 		}
 	}
 
@@ -84,7 +89,7 @@ public class Resistor implements Node {
 	public boolean contains(Point2D p)
 	{
 		Rectangle2D rectangle = new Rectangle2D.Double(
-				x, y+size/2, size*2, size);
+				x, y, size*2, size*2);
 		return rectangle.contains(p);
 	}
 

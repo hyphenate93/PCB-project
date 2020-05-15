@@ -40,38 +40,16 @@ public class ToolBar extends JPanel
       add(grabberButton);
       grabberButton.setSelected(true);
       tools.add(null);
-      
- /*     
-      JButton flipButton = new JButton(new
-    		  Icon()
-    	      {
-    	  		public int getIconHeight() { return BUTTON_SIZE; }
-    	  		public int getIconWidth() { return BUTTON_SIZE; }
-    	  		public void paintIcon(Component c, Graphics g,
-    	  		int x, int y)
-    	  		{
-    	               Graphics2D g2 = (Graphics2D) g;
-    	               GraphPanel.drawGrabber(g2, x + OFFSET, y + OFFSET);
-    	               GraphPanel.drawGrabber(g2, x + OFFSET, y + BUTTON_SIZE - OFFSET);
-    	               GraphPanel.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + OFFSET);
-    	               GraphPanel.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + BUTTON_SIZE - OFFSET);
-    	            }
-    	         });
-    	      flipButton.setToolTipText("Flip component");
-    	      group.add(flipButton);
-    	      add(flipButton);
-    	      flipButton.setSelected(true);
-    	      tools.add(null);
-*/      
+        
       
 
       Node[] components = (Node[]) graph.getNodePrototypes();
       for (Node n : components)
-         add(n, n.getComponent());
-      Edge[] edgeTypes = (Edge[]) graph.getEdgePrototypes();
+         add(n, "add " + n.getComponent());
+/*      Edge[] edgeTypes = (Edge[]) graph.getEdgePrototypes();
       for (Edge e : edgeTypes)
          add(e, "Wire");
-   }
+*/   }
 
    /**
       Gets the node or edge prototype that is associated with
@@ -100,8 +78,7 @@ public class ToolBar extends JPanel
          {
             public int getIconHeight() { return BUTTON_SIZE; }
             public int getIconWidth() { return BUTTON_SIZE; }
-            public void paintIcon(Component c, Graphics g,
-               int x, int y)
+            public void paintIcon(Component c, Graphics g, int x, int y)
             {
                double width = n.getBounds().getWidth();
                double height = n.getBounds().getHeight();
