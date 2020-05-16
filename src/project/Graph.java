@@ -23,6 +23,11 @@ public abstract class Graph implements Serializable
    {
       nodes = new ArrayList<Node>();
       edges = new ArrayList<Edge>();
+      for(int i = 0; i < 14; i++){
+          for(int j = 0; j < 10; j++){
+              occupied[i][j] =  false ;
+          }
+      }
    }
 
    /**
@@ -300,6 +305,7 @@ public abstract class Graph implements Serializable
     	}	
     }
     
+    
     public void updatePrice() {
     	double price = 0.0; 
 	    for (Node n : nodes)
@@ -314,12 +320,20 @@ public abstract class Graph implements Serializable
 	    }  
 	    total = price;
     }
+    public void setOccupied(int a, int b, boolean c){
+    	occupied[a][b]= c;
+    }
+    public boolean getOccupied(int a, int b){
+   	 return occupied[a][b];
+    }
     
     private double total = 0.0;
     private int resistorAmount = 0;
     private int capacitorAmount = 0;
     private int inductorAmount = 0;
     private int potAmount = 0;
+    
+    private boolean occupied [][]= new boolean[14][10];
     private DecimalFormat df = new DecimalFormat("#.00");
     private JTextArea text = new JTextArea(5,10); 
     private int squareSize = 50;

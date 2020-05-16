@@ -129,8 +129,13 @@ public class GraphFrame extends JFrame
             this.remove(scrollPane);
             this.remove(toolBar);
             constructFrameComponents();
+           
             validate();
             repaint();
+            graph.setAmount();
+            
+            graph.updatePrice();
+            graph.updateText();
          }
          catch (IOException exception)
          {

@@ -21,126 +21,123 @@ public class GraphPanel extends JComponent {
       graph = aGraph;
       setBackground(Color.WHITE);
 
-      addMouseListener(new
-         MouseAdapter()
-         {
-            public void mousePressed(MouseEvent event)
-            {
-               Point2D mousePoint = event.getPoint();
-               Node n = graph.findNode(mousePoint); 
-               Edge e = graph.findEdge(mousePoint);
-               Object tool = toolBar.getSelectedTool();
-               
-               
-               if (tool == null) // select
-               {
-                  if (e != null)
-                  {
-                     selected = e;
-                  }
-                  else if (n != null)
-                  {
-                     selected = n;
-                     dragStartPoint = mousePoint;
-                     dragStartBounds = n.getBounds();
-                  }
-                  else 
-                  {
-                     selected = null;
-                  }
-               }
-               else if (tool instanceof Node 
-            		   && graph.findNode(mousePoint) == null 
-            		   && graph.getComponentAmount() < 15)
-               {
-                  Node prototype = (Node) tool;
-                  Node newNode = (Node) prototype.clone();
-                  
-                  boolean added = graph.add(newNode, mousePoint);
-                  if (added)
-                  { 
-                     selected = newNode;
-                     dragStartPoint = mousePoint;
-                     dragStartBounds = newNode.getBounds();
-                     graph.addAmount(prototype.getComponent());
-                     graph.updatePrice();
-                     graph.updateText();
-                  }
-                  else if (n != null)
-                  {
-                	  
-                     selected = n;
-                     dragStartPoint = mousePoint;
-                     dragStartBounds = n.getBounds();
-                  }
-               }
-               else if (tool instanceof Edge)
-               {
-                  if (n != null) rubberBandStart = mousePoint;
-               }
-               lastMousePoint = mousePoint;
-               repaint();
-            }
+  	addMouseListener(new MouseAdapter() {
+		public void mousePressed(MouseEvent event) {
+			Point2D mousePoint = event.getPoint();
+			Node n = graph.findNode(mousePoint);
+			Edge e = graph.findEdge(mousePoint);
+			Object tool = toolBar.getSelectedTool();
 
-            public void mouseReleased(MouseEvent event)
-            {
-               Object tool = toolBar.getSelectedTool();
-               Point2D mousePoint = event.getPoint();
-               Node n = (Node) selected;
-           
-               if (rubberBandStart != null)
-               {
-                   
-                  Edge prototype = (Edge) tool;
-                  Edge newEdge = (Edge) prototype.clone(); 
-                  if (graph.connect(newEdge, 
-                         rubberBandStart, mousePoint))
-                     selected = newEdge;
-               }
-             
-               if(selected != null && mousePoint.getX() >= 105 
-            		   && mousePoint.getX() < 705 
-            		   && mousePoint.getY() > 55 
-            		   && mousePoint.getY()  < 555) {
-            	   
-            	   int moveX = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
-                   int moveY = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
-            	   n.setX(moveX+5);
-            	   n.setY(moveY+5);
-               }
-               revalidate();
-               repaint();
+			if (tool == null) // select
+			{
+				if (e != null) {
+					selected = e;
+				} else if (n != null) {
+					selected = n;
+					dragStartPoint = mousePoint;
+					dragStartBounds = n.getBounds();
+				} else {
+					selected = null;
+				}
+			} else if (tool instanceof Node && graph.findNode(mousePoint) == null
+					&& graph.getComponentAmount() < 15) {
+				Node prototype = (Node) tool;
+				Node newNode = (Node) prototype.clone();
 
-               
-               lastMousePoint = null;
-               dragStartBounds = null;
-               rubberBandStart = null;
-            }
-         });
+				boolean added = graph.add(newNode, mousePoint);
+				
+				if (added) {
+					graph.setOccupied((int)(newNode.getX())/50,(int)(newNode.getY())/50,occupied);
+					selected = newNode;
+					dragStartPoint = mousePoint;
+					dragStartBounds = newNode.getBounds();
+					graph.addAmount(prototype.getComponent());
+					graph.updatePrice();
+					graph.updateText();
+				} else if (n != null) {
 
-      addMouseMotionListener(new
-         MouseMotionAdapter()
-         {
-            public void mouseDragged(MouseEvent event)
-            {
-               Point2D mousePoint = event.getPoint();
-               Node n = (Node) selected;
+					selected = n;
+					dragStartPoint = mousePoint;
+					dragStartBounds = n.getBounds();
+					
+				}
+			} else if (tool instanceof Edge) {
+				
+				if (n != null)
+					rubberBandStart = mousePoint;
+			}
+			lastMousePoint = mousePoint;
+			repaint();
+		}
+
+		public void mouseReleased(MouseEvent event) {
+			Object tool = toolBar.getSelectedTool();
+			Point2D mousePoint = event.getPoint();
+			
+			Node n = (Node) selected;
+			if (rubberBandStart != null) {
+				Point2D mousePoint2 = event.getPoint();
+
+				Edge prototype = (Edge) tool;
+				Edge newEdge = (Edge) prototype.clone();
+				if (graph.connect(newEdge, rubberBandStart, mousePoint2))
+					selected = newEdge;
+			}
+
+			if (selected != null && mousePoint.getX() >= 0 && mousePoint.getX() < 705 && mousePoint.getY() > 0
+					&& mousePoint.getY() < 505) {
+				
+				int xCord = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
+				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
+
+				if(graph.getOccupied((xCord+5)/50,(yCord+5)/50)==free) {
+				n.setX(xCord + 5);
+				n.setY(yCord + 5);
+				graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,occupied);
+				}
+				else {
+					if(n.getX()!=xCord + 5 &&n.getY()!=xCord + 5) {
+					n.setX(800);
+					n.setY(105);
+					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,free);
+				}}
+			
+			}
+			revalidate();
+			repaint();
+
+			lastMousePoint = null;
+			dragStartBounds = null;
+			rubberBandStart = null;
+		}
+	});
+
+	addMouseMotionListener(new MouseMotionAdapter() {
+		public void mouseDragged(MouseEvent event) {
+			Point2D mousePoint = event.getPoint();
                if (dragStartBounds != null)
                {
                   if (selected instanceof Node)
-                  {    
-                	 Rectangle2D bounds = n.getBounds();
+                  {
+                	  graph.setOccupied((int)(dragStartBounds.getX())/50,(int)(dragStartBounds.getY())/50,false);
+                     Node n = (Node) selected;
+                     Rectangle2D bounds = n.getBounds();
                      n.translate(
                         dragStartBounds.getX() - bounds.getX() 
                         + mousePoint.getX() - dragStartPoint.getX(),
                         dragStartBounds.getY() - bounds.getY() 
                         + mousePoint.getY() - dragStartPoint.getY());
+                   
                   }
+                 
                }
+             
                lastMousePoint = mousePoint;
-                  
                repaint();
-               }    
+               
+          
+               
+            }
          });
    }
 
@@ -231,5 +228,7 @@ public class GraphPanel extends JComponent {
 	private Point2D dragStartPoint;
 	private Rectangle2D dragStartBounds;
 	private Object selected;
+	public static final boolean occupied = true;
+	public static final boolean free = false;
 	private static final Color PURPLE = new Color(0.7f, 0.4f, 0.7f);
 }
