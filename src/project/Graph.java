@@ -321,17 +321,24 @@ public abstract class Graph implements Serializable
 	    total = price;
     }
     public void setOccupied(int a, int b, boolean c){
+    	if(-1<a && a<14 && -1 < b && b < 10) {
     	occupied[a][b]= c;
+    	}
     }
     public boolean getOccupied(int a, int b){
+    	if(-1<a && a<14 && -1 < b && b < 10) {
    	 return occupied[a][b];
+    	}
+    	else {
+    		return false;
+    	}
     }
     
-    private double total = 0.0;
-    private int resistorAmount = 0;
-    private int capacitorAmount = 0;
-    private int inductorAmount = 0;
-    private int potAmount = 0;
+    private double total ;
+    private int resistorAmount ;
+    private int capacitorAmount ;
+    private int inductorAmount;
+    private int potAmount;
     
     private boolean occupied [][]= new boolean[14][10];
     private DecimalFormat df = new DecimalFormat("#.00");

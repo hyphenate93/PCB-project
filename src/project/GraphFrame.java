@@ -165,6 +165,8 @@ public class GraphFrame extends JFrame
             ObjectOutputStream out = new ObjectOutputStream(
                new FileOutputStream(file));
             out.writeObject(graph);
+           
+            
             out.close();
          }
          catch (IOException exception)
