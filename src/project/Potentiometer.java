@@ -3,17 +3,14 @@ package project;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.math.BigDecimal;
 
 public class Potentiometer implements Node {
 
 	
 	
-	public Potentiometer(Color aColor)
-	{
+	public Potentiometer(Color aColor) {
 		component = "Potentiometer";
 		price = 4.55;
 		size = DEFAULT_SIZE;
@@ -24,30 +21,24 @@ public class Potentiometer implements Node {
 		orientation = "horizontal";
 	}
 
-	public void setColor(Color aColor)
-	{
+	public void setColor(Color aColor) {
 		color = aColor;
 	}
 
-	public Color getColor()
-	{
+	public Color getColor() {
 		return color;
 	}
 
-	public Object clone()
-	{
-		try
-		{
+	public Object clone() {
+		try {
 			return super.clone();
 		}
-		catch (CloneNotSupportedException exception)
-		{
+		catch (CloneNotSupportedException exception) {
 			return null;
 		}
 	}
 
-	public void draw(Graphics2D g2)
-	{
+	public void draw(Graphics2D g2) {
 		if(orientation == "vertical") {
 			
 			g2.setColor(Color.BLACK);
@@ -59,8 +50,8 @@ public class Potentiometer implements Node {
 			g2.setColor(Color.BLACK);
 			g2.draw(ok);
 			g2.draw(circle);
-		} 
-		else {
+		
+		} else {
 			
 			g2.setColor(Color.BLACK);
 			g2.fillRoundRect((int)x-1, (int)y-1, (int)(size+2)*2, (int)(size+2)*2, 10, 10);
@@ -74,27 +65,22 @@ public class Potentiometer implements Node {
 		}
 	}
 
-	public void translate(double dx, double dy)
-	{
+	public void translate(double dx, double dy) {
 		x += dx;
 		y += dy;
 	}
 
-	public boolean contains(Point2D p)
-	{
-		Rectangle2D rectangle = new Rectangle2D.Double(
-	    		x, y, size*2, size*2);
+	public boolean contains(Point2D p) {
+		Rectangle2D rectangle = new Rectangle2D.Double(x, y, size*2, size*2);
 	    return rectangle.contains(p);
 	}
 
-	public Rectangle2D getBounds()
-	{
+	public Rectangle2D getBounds() {
 	    return new Rectangle2D.Double(
 	            x, y, size*2, size*2);
 	}
 
-	public Point2D getConnectionPoint(Point2D other)
-	{
+	public Point2D getConnectionPoint(Point2D other) {
 		double centerX = x + size / 2;
 		double centerY = y + size / 2;
 		double dx = other.getX() - centerX;
@@ -118,14 +104,6 @@ public class Potentiometer implements Node {
  		 price = cost;
 	 }
  	 
- 	 public void flip() {
- 		 if(orientation == "horizontal") {
- 			 orientation = "vertical";
- 		 }
- 		 else if(orientation == "vertical") {
- 			 orientation = "horizontal";
- 		 }
- 	 }
  	public double getX() {
 		return x;
 	}
@@ -134,25 +112,27 @@ public class Potentiometer implements Node {
 	}
 	public void setX(double x) {
 		this.x = x;
-	}
-public void setY(double y) {
-	this.y = y;
-}
+    }
 
-public void setOrientation(String s) {
-	this.orientation = s;	
-}   
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public void setOrientation(String s) {
+		this.orientation = s;	
+	}   
 
 	public String getOrientation() {
 		return this.orientation;
 	}  
- 	 private String component;
- 	 private String orientation;
- 	 private double price;
- 	 private double x;
- 	 private double y;
- 	 private double size;
- 	 private Color color;  
- 	 private static final int DEFAULT_SIZE = 20;
+	
+	private String component;
+	private String orientation;
+	private double price;
+	private double x;
+	private double y;
+	private double size;
+	private Color color;  
+	private static final int DEFAULT_SIZE = 20;
 }
 

@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 /**
  * A panel to draw a graph
@@ -25,14 +24,11 @@ public class GraphPanel extends JComponent {
 		public void mousePressed(MouseEvent event) {
 			Point2D mousePoint = event.getPoint();
 			Node n = graph.findNode(mousePoint);
-			Edge e = graph.findEdge(mousePoint);
 			Object tool = toolBar.getSelectedTool();
 
 			if (tool == null) // select
 			{
-				if (e != null) {
-					selected = e;
-				} else if (n != null) {
+				if (n != null) {
 					selected = n;
 					dragStartPoint = mousePoint;
 					dragStartBounds = n.getBounds();
@@ -78,12 +74,7 @@ public class GraphPanel extends JComponent {
 					
 				}
 				
-			} else if (tool instanceof Edge) {
-				
-				if (n != null)
-					rubberBandStart = mousePoint;
-			}
-			lastMousePoint = mousePoint;
+			}		
 			repaint();
 		}
 
@@ -92,14 +83,6 @@ public class GraphPanel extends JComponent {
 			Point2D mousePoint = event.getPoint();
 			
 			Node n = (Node) selected;
-			if (rubberBandStart != null) {
-				Point2D mousePoint2 = event.getPoint();
-
-				Edge prototype = (Edge) tool;
-				Edge newEdge = (Edge) prototype.clone();
-				if (graph.connect(newEdge, rubberBandStart, mousePoint2))
-					selected = newEdge;
-			}
 
 			if (selected != null && mousePoint.getX() >= 55 && mousePoint.getX() < 705 && mousePoint.getY() > 0
 					&& mousePoint.getY() < 505) {
@@ -113,10 +96,12 @@ public class GraphPanel extends JComponent {
 					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,n);
 				}
 				else {
-					if(!(n.equals(graph.getOccupied((xCord+5)/50,(yCord+5)/50)))&& graph.getOccupied((xCord+5)/50,(yCord+5)/50)!= null) { 
-					n.setX(800);
-					n.setY(105);
-					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,null);
+					if(!(n.equals(graph.getOccupied((xCord+5)/50,(yCord+5)/50)))
+							&& graph.getOccupied((xCord+5)/50,(yCord+5)/50)!= null) { 
+						
+						n.setX(800);
+						n.setY(105);
+						graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,null);
 				}}
 			}
 			revalidate();
@@ -149,13 +134,10 @@ public class GraphPanel extends JComponent {
                }
              
                lastMousePoint = mousePoint;
-               repaint();
-               
-          
-               
+               repaint();                
             }
          });
-   }
+	}
 
 	public void paintComponent(Graphics g) {
 
@@ -173,19 +155,6 @@ public class GraphPanel extends JComponent {
 			drawGrabber(g2, grabberBounds.getMaxX(), grabberBounds.getMaxY());
 		}
 
-		if (selected instanceof Edge) {
-			Line2D line = ((Edge) selected).getConnectionPoints();
-			drawGrabber(g2, line.getX1(), line.getY1());
-			drawGrabber(g2, line.getX2(), line.getY2());
-		}
-
-		if (rubberBandStart != null) {
-			Color oldColor = g2.getColor();
-			g2.setColor(PURPLE);
-
-			g2.draw(new Line2D.Double(rubberBandStart, lastMousePoint));
-			g2.setColor(oldColor);
-		}
 	}
 
 	/**
@@ -197,27 +166,11 @@ public class GraphPanel extends JComponent {
 			graph.setAmount();
 			graph.updatePrice();
 			graph.updateText();
-		} else if (selected instanceof Edge) {
-			graph.removeEdge((Edge) selected);
 		}
 		selected = null;
 		repaint();
 	}
 
-	/**
-	 * Edits the properties of the selected graph element.
-	 */
-	/*
-	public void editSelected() {
-		PropertySheet sheet = new PropertySheet(selected);
-		sheet.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent event) {
-				repaint();
-			}
-		});
-		JOptionPane.showMessageDialog(null, sheet, "Properties", JOptionPane.QUESTION_MESSAGE);
-	}
-*/
 	/**
 	 * Draws a single "grabber", a filled square
 	 * 

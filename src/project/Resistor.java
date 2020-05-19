@@ -2,18 +2,17 @@ package project;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class Resistor implements Node {
-	  /**
-    	Construct a circle node with a given size and color.
+
+	/**
+   		Construct a circle node with a given size and color.
     	@param aColor the fill color
-	   */
-	public Resistor(Color aColor)
-	{
+	*/
+	public Resistor(Color aColor) {
 		component = "Resistor"; 
 		price = 1.99;
 		size = DEFAULT_SIZE;
@@ -23,30 +22,24 @@ public class Resistor implements Node {
 		orientation = "horizontal";
 	}
 
-	public void setColor(Color aColor)
-	{
+	public void setColor(Color aColor) {
 		color = aColor;
 	}
 
-	public Color getColor()
-	{
+	public Color getColor() {
 		return color;
 	}
 
-	public Object clone()
-	{
-		try
-		{
+	public Object clone() {
+		try {
 			return super.clone();
 		}
-		catch (CloneNotSupportedException exception)
-		{
+		catch (CloneNotSupportedException exception) {
 			return null;
 		}
 	}
 
-	public void draw(Graphics2D g2)
-	{
+	public void draw(Graphics2D g2) {
 		if(orientation == "vertical") {
 
 			g2.draw(new Line2D.Double(x+size+25, y-30, x+size+25, y+size));
@@ -114,34 +107,30 @@ public class Resistor implements Node {
 	 	return price;
  	}
 	
-	public void flip() {
-		if(orientation == "horizontal") {
-			orientation = "vertical";
-		}
-		else if(orientation == "vertical") {
-			orientation = "horizontal";
-		}
- 	}
 	public double getX() {
 		return x;
 	}
+
 	public double getY() {
 		return y;
 	}
+
 	public void setX(double x) {
 		this.x = x;
 	}
-public void setY(double y) {
-	this.y = y;
-}
+	
+	public void setY(double y) {
+		this.y = y;
+	}
 
-public void setOrientation(String s) {
-	this.orientation = s;	
-}   
+	public void setOrientation(String s) {
+		this.orientation = s;	
+	}   
 
-public String getOrientation() {
-	return this.orientation;
-}  
+	public String getOrientation() {
+		return this.orientation;
+	}  
+
  	private String component;
  	private String orientation;
  	private double price;
@@ -150,5 +139,4 @@ public String getOrientation() {
  	private double size;
  	private Color color;  
  	private static final int DEFAULT_SIZE = 20;
-
 }

@@ -2,10 +2,8 @@ package project;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Point2D;
 import java.io.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 /**
    This frame shows the toolbar and the graph.
@@ -73,22 +71,10 @@ public class GraphFrame extends JFrame
                panel.removeSelected();
             }
          });
-/*
-      JMenuItem propertiesItem
-         = new JMenuItem("Properties");
-      propertiesItem.addActionListener(new
-         ActionListener()
-         {
-            public void actionPerformed(ActionEvent event)
-            {
-               panel.editSelected();
-            }
-         });
-    */
+
    
       JMenu editMenu = new JMenu("Edit");
       editMenu.add(deleteItem);
-//      editMenu.add(propertiesItem);
       menuBar.add(editMenu);
       
    	}
@@ -178,40 +164,40 @@ public class GraphFrame extends JFrame
                exception);
          }
       }
-   }
+    }
    
-   public void setupText() {
+   	public void setupText() {
    	
    		text.setBackground(Color.YELLOW);
    		text.setLineWrap(true);
    		text.setEditable(false);
    		text.setFont(new Font("Segoe Script", Font.BOLD, 20));
-   }
+   	}
    
-   public void updateText() {
-	   	 text.setText("ShoppingList: \n\n\n" 
-	   				+ graph.getResistorAmount() + "x Resistor\n"
-	   			    + graph.getCapacitorAmount() + "x Capacitor\n"
-	   				+ graph.getInductorAmount() + "x Inductor\n"
-	   				+ graph.getPotAmount() + "x Potentiometer\n"
-	   				+ graph.getWireAmount() + "x Wire\n\n\n\n\n\n\n\n\n"
-	   				+ "total cost: \n" + graph.getPrice()+"$");
-   }
+   	public void updateText() {
+   		text.setText("ShoppingList: \n\n\n" 
+   				+ graph.getResistorAmount() + "x Resistor\n"
+   				+ graph.getCapacitorAmount() + "x Capacitor\n"
+   				+ graph.getInductorAmount() + "x Inductor\n"
+   				+ graph.getPotAmount() + "x Potentiometer\n"
+   				+ graph.getWireAmount() + "x Wire\n\n\n\n\n\n\n\n\n"
+   				+ "total cost: \n" + graph.getPrice()+"$");
+   	}
    
-   public static JTextArea getText() {
-	   return text;
-   }
+    public static JTextArea getText() {
+    	return text;
+    }
    
-   public void setGraphText(String s) {
-	   text.setText(s);
-   }
+    public void setGraphText(String s) {
+    	text.setText(s);
+    }
    
-   private static JTextArea text;
-   private Graph graph;
-   private GraphPanel panel;
-   private JScrollPane scrollPane;
-   private ToolBar toolBar;
+    private static JTextArea text;
+    private Graph graph;
+    private GraphPanel panel;
+    private JScrollPane scrollPane;
+    private ToolBar toolBar;
 
-   public static final int FRAME_WIDTH = 1200;
-   public static final int FRAME_HEIGHT = 700;
+    public static final int FRAME_WIDTH = 1200;
+    public static final int FRAME_HEIGHT = 700;
 }

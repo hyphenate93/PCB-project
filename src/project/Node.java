@@ -46,26 +46,23 @@ public interface Node extends Serializable, Cloneable {
 	 * 
 	 * @return the bounding rectangle
 	 */
-
 	Rectangle2D getBounds();
 
 	String getComponent();
 
 	double getPrice();
 
-	public double getX();
+	double getX();
 
-	public double getY();
+	double getY();
 
-	public void setX(double a);
+	void setX(double a);
 
-	public void setY(double a);
+	void setY(double a);
 	
 	void setOrientation(String s);
 
 	String getOrientation();
 	
 	Object clone();
-
-	void flip();
 }
