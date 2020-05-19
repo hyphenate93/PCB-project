@@ -178,8 +178,9 @@ public abstract class Graph implements Serializable
       Gets the edge types of a particular graph type.
       @return an array of edge prototypes
    */
+   /*
    public abstract Edge[] getEdgePrototypes();
-
+*/
    /**
       Gets the nodes of this graph.
       @return an unmodifiable list of the nodes

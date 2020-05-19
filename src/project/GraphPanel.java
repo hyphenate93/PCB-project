@@ -207,6 +207,7 @@ public class GraphPanel extends JComponent {
 	/**
 	 * Edits the properties of the selected graph element.
 	 */
+	/*
 	public void editSelected() {
 		PropertySheet sheet = new PropertySheet(selected);
 		sheet.addChangeListener(new ChangeListener() {
@@ -216,7 +217,7 @@ public class GraphPanel extends JComponent {
 		});
 		JOptionPane.showMessageDialog(null, sheet, "Properties", JOptionPane.QUESTION_MESSAGE);
 	}
-
+*/
 	/**
 	 * Draws a single "grabber", a filled square
 	 * 

@@ -73,7 +73,7 @@ public class GraphFrame extends JFrame
                panel.removeSelected();
             }
          });
-
+/*
       JMenuItem propertiesItem
          = new JMenuItem("Properties");
       propertiesItem.addActionListener(new
@@ -84,7 +84,7 @@ public class GraphFrame extends JFrame
                panel.editSelected();
             }
          });
-    
+    */
    
       JMenu editMenu = new JMenu("Edit");
       editMenu.add(deleteItem);
