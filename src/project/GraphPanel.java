@@ -46,11 +46,11 @@ public class GraphPanel extends JComponent {
 				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
 				if(n instanceof Node && n.getOrientation().equals("vertical")) {
 					n.setOrientation("horizontal");
-					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,occupied);
+					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,n);
 				}
 				else if(n instanceof Node && n.getOrientation().equals("horizontal")){
 					n.setOrientation("vertical");
-					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,free);
+					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,null);
 				}
 				revalidate();
 				repaint();
@@ -63,7 +63,7 @@ public class GraphPanel extends JComponent {
 				boolean added = graph.add(newNode, mousePoint);
 				
 				if (added) {
-					graph.setOccupied((int)(newNode.getX())/50,(int)(newNode.getY())/50,occupied);
+					graph.setOccupied((int)(newNode.getX())/50,(int)(newNode.getY())/50,newNode);
 					selected = newNode;
 					dragStartPoint = mousePoint;
 					dragStartBounds = newNode.getBounds();
@@ -107,16 +107,16 @@ public class GraphPanel extends JComponent {
 				int xCord = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
 				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
 
-				if(graph.getOccupied((xCord+5)/50,(yCord+5)/50)==free) {
+				if(graph.getOccupied((xCord+5)/50,(yCord+5)/50)==null) {
 					n.setX(xCord + 5);
 					n.setY(yCord + 5);
-					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,occupied);
+					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,n);
 				}
 				else {
-					if (n.getX()!=xCord + 5 && n.getY()!=xCord + 5) {
+					if(!(n.equals(graph.getOccupied((xCord+5)/50,(yCord+5)/50)))&& graph.getOccupied((xCord+5)/50,(yCord+5)/50)!= null) { 
 					n.setX(800);
 					n.setY(105);
-					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,free);
+					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,null);
 				}}
 			}
 			revalidate();
@@ -135,7 +135,7 @@ public class GraphPanel extends JComponent {
                {
                   if (selected instanceof Node)
                   {
-                	  graph.setOccupied((int)(dragStartBounds.getX())/50,(int)(dragStartBounds.getY())/50,false);
+                	  graph.setOccupied((int)(dragStartBounds.getX())/50,(int)(dragStartBounds.getY())/50,null);
                      Node n = (Node) selected;
                      Rectangle2D bounds = n.getBounds();
                      n.translate(

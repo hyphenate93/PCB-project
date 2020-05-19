@@ -25,7 +25,7 @@ public abstract class Graph implements Serializable
       edges = new ArrayList<Edge>();
       for(int i = 0; i < 14; i++){
           for(int j = 0; j < 10; j++){
-              occupied[i][j] =  false ;
+              occupied[i][j] =  null ;
           }
       }
    }
@@ -326,20 +326,20 @@ public abstract class Graph implements Serializable
     }
     
     
-    public void setOccupied(int a, int b, boolean c){
+    public void setOccupied(int a, int b, Node c){
     	if(-1<a && a<14 && -1 < b && b < 10) {
+    		
     	occupied[a][b]= c;
     	}
     }
-    public boolean getOccupied(int a, int b){
+    public Node getOccupied(int a, int b){
     	if(-1<a && a<14 && -1 < b && b < 10) {
    	 return occupied[a][b];
     	}
     	else {
-    		return false;
+    		return null;
     	}
     }
-    
     public void updateText() {
 
     	GraphFrame.getText().setText("ShoppingList: \n\n\n" 
@@ -359,7 +359,7 @@ public abstract class Graph implements Serializable
     private int potAmount;
     private int wireAmount;
     
-    private boolean occupied [][]= new boolean[14][10];
+    private Node[][] occupied= new Node[14][10];
     private DecimalFormat df = new DecimalFormat("#.00");
     private int squareSize = 50;
     private ArrayList<Node> nodes;
