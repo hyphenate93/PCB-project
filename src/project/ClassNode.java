@@ -185,4 +185,21 @@ public void setY(double a) {
 	
 }
 
+@Override
+public void flip() {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void setOrientation(String s) {
+	// TODO Auto-generated method stub
+	
+}   
+
+@Override
+public String getOrientation() {
+	return null;
+}   
+
 }

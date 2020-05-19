@@ -84,12 +84,13 @@ public class GraphFrame extends JFrame
                panel.editSelected();
             }
          });
-      
+    
    
       JMenu editMenu = new JMenu("Edit");
       editMenu.add(deleteItem);
-      editMenu.add(propertiesItem);
+//      editMenu.add(propertiesItem);
       menuBar.add(editMenu);
+      
    }
 
    /**

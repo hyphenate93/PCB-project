@@ -40,6 +40,25 @@ public class ToolBar extends JPanel
       add(grabberButton);
       grabberButton.setSelected(true);
       tools.add(null);
+      
+      
+      JToggleButton rotateButton = new JToggleButton(new
+    	         Icon()
+    	         {
+    	            public int getIconHeight() { return BUTTON_SIZE; }
+    	            public int getIconWidth() { return BUTTON_SIZE; }
+    	            public void paintIcon(Component c, Graphics g,
+    	               int x, int y)
+    	            {
+    	               Graphics2D g2 = (Graphics2D) g;
+    	               GraphPanel.rotateArrow(g2, x + 2, y + 2);
+    	            }
+    	         });
+    	      rotateButton.setToolTipText("Rotate component");
+    	      group.add(rotateButton);
+    	      add(rotateButton);
+    	      rotateButton.setSelected(true);
+    	      tools.add("rotate");
         
       
 

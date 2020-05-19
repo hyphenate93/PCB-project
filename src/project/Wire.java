@@ -8,19 +8,18 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.math.BigDecimal;
 
-public class Potentiometer implements Node {
+public class Wire implements Node {
 
 	
 	
-	public Potentiometer(Color aColor)
+	public Wire(Color aColor)
 	{
-		component = "Potentiometer";
-		price = 4.55;
+		component = "Wire";
+		price = 0.10;
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
 		color = aColor;
-		price = 7.99;
 		orientation = "horizontal";
 	}
 
@@ -50,27 +49,23 @@ public class Potentiometer implements Node {
 	{
 		if(orientation == "vertical") {
 			
+			g2.setColor(Color.RED);
+			g2.drawArc((int)(x+size+15)+2, (int)(y-40), 50, 70, -135, -90);
+			g2.drawArc((int)(x+size+15)+1, (int)(y-40), 50, 70, -135, -90);
+			g2.drawArc((int)(x+size+15)+3, (int)(y-40), 50, 70, -135, -90);
 			g2.setColor(Color.BLACK);
-			g2.fillRoundRect((int)x-1, (int)y-1, (int)(size+2)*2, (int)(size+2)*2, 10, 10);
-			g2.setColor(this.color);
-			g2.fillRoundRect((int)x, (int)y, (int)size*2, (int)size*2, 10, 10);
-			Rectangle2D.Double ok = new Rectangle2D.Double(x+10, y+18, 18, 5);
-			Ellipse2D.Double circle = new Ellipse2D.Double(x+5, y+5, 30, 30);
-			g2.setColor(Color.BLACK);
-			g2.draw(ok);
-			g2.draw(circle);
+			g2.drawArc((int)(x+size+15), (int)(y-40), 50, 70, -135, -90);
+			g2.drawArc((int)(x+size+15)+4, (int)(y-40), 50, 70, -135, -90);
 		} 
 		else {
-			
+			g2.setColor(Color.RED);
+			g2.drawArc((int)x-15, (int)(y+size-10), 70, 50, 45, 90);
+			g2.drawArc((int)x-15, (int)(y+size-9), 70, 50, 45, 90);
+			g2.drawArc((int)x-15, (int)(y+size-8), 70, 50, 45, 90);
+			g2.drawArc((int)x-15, (int)(y+size-7), 70, 50, 45, 90);
 			g2.setColor(Color.BLACK);
-			g2.fillRoundRect((int)x-1, (int)y-1, (int)(size+2)*2, (int)(size+2)*2, 10, 10);
-			g2.setColor(this.color);
-			g2.fillRoundRect((int)x, (int)y, (int)size*2, (int)size*2, 10, 10);
-			Rectangle2D.Double ok = new Rectangle2D.Double(x+18, y+10, 5, 18);
-			Ellipse2D.Double circle = new Ellipse2D.Double(x+5, y+5, 30, 30);
-			g2.setColor(Color.BLACK);
-			g2.draw(ok);
-			g2.draw(circle);
+			g2.drawArc((int)x-15, (int)(y+size-10), 70, 50, 45, 90);
+			g2.drawArc((int)x-15, (int)(y+size-6), 70, 50, 45, 90);
 		}
 	}
 
@@ -135,17 +130,18 @@ public class Potentiometer implements Node {
 	public void setX(double x) {
 		this.x = x;
 	}
-public void setY(double y) {
-	this.y = y;
-}
-
-public void setOrientation(String s) {
-	this.orientation = s;	
-}   
-
+	public void setY(double y) {
+		this.y = y;
+	}
+	
+	public void setOrientation(String s) {
+		this.orientation = s;	
+	}   
+	
 	public String getOrientation() {
 		return this.orientation;
-	}  
+	}   
+	
  	 private String component;
  	 private String orientation;
  	 private double price;
@@ -155,4 +151,3 @@ public void setOrientation(String s) {
  	 private Color color;  
  	 private static final int DEFAULT_SIZE = 20;
 }
-

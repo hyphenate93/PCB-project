@@ -48,18 +48,19 @@ public class Inductor implements Node {
 	public void draw(Graphics2D g2)
 	{
 		if(orientation == "vertical") {
-			Ellipse2D e1 = new Ellipse2D.Double(
-		          		x, y, size, size*2);
-			Ellipse2D e2 = new Ellipse2D.Double(
-						x+size/3, y, size, size*2);
-			Ellipse2D e3 = new Ellipse2D.Double(
-						x+2*size/3, y, size, size*2);
-			Ellipse2D e4 = new Ellipse2D.Double(
-						x+size, y, size, size*2);
-			g2.draw(e1);
-			g2.draw(e2);
-			g2.draw(e3);
-			g2.draw(e4);
+
+			g2.setColor(Color.DARK_GRAY);
+			g2.fillRoundRect((int)(x+size+15), (int)y-20, (int)(size-1)/2, (int)size*2-8, 2, 2);
+			g2.setColor(Color.BLACK);
+			for(int i = 0; i < 8; i++){
+				g2.draw(new Ellipse2D.Double(x+size+14, (y-21)+(4*i), size/2, 5));
+			}
+			Line2D.Double line1 = new Line2D.Double();
+			line1.setLine(x+36, y-20, x+size*2+6, y - 30);
+			Line2D.Double line2 = new Line2D.Double();
+			line2.setLine(x+36, y+12, x+size*2+6, y+size);
+			g2.draw(line1);
+			g2.draw(line2);
 		}
 		else {
 			g2.setColor(Color.DARK_GRAY);
@@ -76,20 +77,6 @@ public class Inductor implements Node {
 			line2.setLine(x+37, y+5+size/2, x+size*2+6, y+size);
 			g2.draw(line1);
 			g2.draw(line2);
-			/*
-			Ellipse2D e1 = new Ellipse2D.Double(
-						x, y, size, size*2);
-			Ellipse2D e2 = new Ellipse2D.Double(
-						x+size/3, y, size, size*2);
-			Ellipse2D e3 = new Ellipse2D.Double(
-						x+2*size/3, y, size, size*2);
-			Ellipse2D e4 = new Ellipse2D.Double(
-						x+size, y, size, size*2);
-			g2.draw(e1);
-			g2.draw(e2);
-			g2.draw(e3);
-			g2.draw(e4);
-			*/
 		}
 	}
 
@@ -145,7 +132,8 @@ public class Inductor implements Node {
  			 orientation = "horizontal";
  		 }
  	 }
- 	public double getX() {
+
+ 	 public double getX() {
 		return x;
 	}
 	public double getY() {
@@ -154,10 +142,19 @@ public class Inductor implements Node {
 	public void setX(double x) {
 		this.x = x;
 	}
-public void setY(double y) {
-	this.y = y;
-}
+	
+	public void setY(double y) {
+		this.y = y;
+	}
 
+	public void setOrientation(String s) {
+		this.orientation = s;	
+	}
+	
+	public String getOrientation() {
+		return this.orientation;
+	}  
+	
  	 private String component;
  	 private String orientation;
  	 private double price;

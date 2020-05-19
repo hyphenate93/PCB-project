@@ -48,35 +48,28 @@ public class Resistor implements Node {
 	public void draw(Graphics2D g2)
 	{
 		if(orientation == "vertical") {
-			Rectangle2D rectangle = new Rectangle2D.Double(
-					x, y+size/2, size*2, size);
-			Line2D.Double line1
-			= new Line2D.Double();
-			line1.setLine(x-5, y+size, x+size+25, y+size);
-			g2.draw(line1);
+
+			g2.draw(new Line2D.Double(x+size+25, y-30, x+size+25, y+size));
+			g2.fillRoundRect((int)(x+size+19), (int)y-26, 2+(int)size/2, 2+(int)size*2, 10, 10);
 			Color oldColor = g2.getColor();
 			g2.setColor(color);
-			g2.fill(rectangle);
+			g2.fillRoundRect((int)(x+size+20), (int)y-25, (int)size/2, (int)size*2, 10, 10);
 			g2.setColor(oldColor);
-			g2.draw(rectangle);
+			g2.fillRoundRect((int)(x+size+19), (int)y-15, 2+(int)size/2, 3, 1, 1);
+			g2.fillRoundRect((int)(x+size+19), (int)y+5, 2+(int)size/2, 3, 1, 1);
+			g2.fillRoundRect((int)(x+size+19), (int)y, 2+(int)size/2, 3, 1, 1);
 		}
 		else {
-			
-			Line2D.Double line1
-			= new Line2D.Double();
-			line1.setLine(x-6, y+size, x+size+26, y+size);
-			g2.draw(line1);
+
+			g2.draw(new Line2D.Double(x-6, y+size, x+size+26, y+size));
 			g2.fillRoundRect((int)x-1, (int)y-1+15, 2+(int)size*2, 2+(int)size/2, 10, 10);
 			Color oldColor = g2.getColor();
 			g2.setColor(color);
-//			g2.fill(rectangle);
 			g2.fillRoundRect((int)x, (int)y+15, (int)size*2, (int)size/2, 10, 10);
 			g2.setColor(oldColor);
 			g2.fillRoundRect((int)x+10, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
 			g2.fillRoundRect((int)x+25, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
 			g2.fillRoundRect((int)x+30, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
-//			g2.draw(rectangle);
-//			g2.fillRoundRect((int)x-2, (int)y-2+(int)size/2, (int)size*+4, (int)size+4, 10, 10);
 		}
 	}
 
@@ -141,6 +134,14 @@ public class Resistor implements Node {
 public void setY(double y) {
 	this.y = y;
 }
+
+public void setOrientation(String s) {
+	this.orientation = s;	
+}   
+
+public String getOrientation() {
+	return this.orientation;
+}  
  	private String component;
  	private String orientation;
  	private double price;

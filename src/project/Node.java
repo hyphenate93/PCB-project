@@ -60,6 +60,12 @@ public interface Node extends Serializable, Cloneable {
 	public void setX(double a);
 
 	public void setY(double a);
+	
+	void setOrientation(String s);
 
+	String getOrientation();
+	
 	Object clone();
+
+	void flip();
 }

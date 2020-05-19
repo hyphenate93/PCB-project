@@ -23,7 +23,8 @@ public class ComponentGraph extends Graph
 	            new Resistor(new Color(255, 100, 50)),
 	            new Capacitor(Color.WHITE),
 	            new Potentiometer(Color.BLUE),
-	            new Inductor(Color.WHITE)};  
+	            new Inductor(Color.WHITE),
+	            new Wire(Color.WHITE)};  
 
       return components;
    }

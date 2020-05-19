@@ -102,24 +102,19 @@ public abstract class Graph implements Serializable
    */
    public void draw(Graphics2D g2)
    {
-	   g2.setColor(new Color(0,160,0));
-       g2.fillRect( 50, 50, squareSize * 14, squareSize* 10);
        g2.setColor( Color.BLACK );
-       g2.drawRect( 50, 50, squareSize * 14, squareSize* 10);
+	   g2.fillRoundRect(48, 48, (squareSize * 14)+4, (squareSize * 10)+4, 10, 10);
+	   g2.setColor(new Color(0,160,0));
+       g2.fillRoundRect(50, 50, squareSize * 14, squareSize * 10, 10, 10);  			
+       g2.setColor( Color.BLACK );
        for(int i = 0; i < 13; i++) {
     	   for(int j = 0; j < 10; j++) {
-//    		   if(i < 1){
+
     			   g2.setColor(new Color(198, 165, 48));
     			   g2.fillRoundRect(97 + squareSize*i, 72 + squareSize*j, 7, 7, 3, 3);  			   
     			   g2.setColor(Color.BLACK);
     			   g2.fillRoundRect(98 + squareSize*i, 73 + squareSize*j, 4, 4, 3, 3);
-//    		   }
-//    		   if(j < 8){
-//    			   g2.setColor(new Color(198, 165, 48));
-//    			   g2.fillRoundRect(72 + squareSize*i, 97 + squareSize*j, 7, 7, 3, 3);
-//    			   g2.setColor(Color.BLACK);
-//    			   g2.fillRoundRect(73 + squareSize*i, 98 + squareSize*j, 4, 4, 3, 3);
-//    		   }
+
     	   }
        }
        for (Node n : nodes)
@@ -220,7 +215,8 @@ public abstract class Graph implements Serializable
  	   				+ resistorAmount + "x Resistor\n"
  	   			    + capacitorAmount + "x Capacitor\n"
  	   				+ inductorAmount + "x Inductor\n"
- 	   				+ potAmount + "x Potentiometer\n\n\n\n\n\n\n\n\n"
+ 	   				+ potAmount + "x Potentiometer\n"
+ 	   				+ wireAmount + "x Wire\n\n\n\n\n\n\n\n\n"
  	   				+ "total cost: \n" + getPrice()+"$");
     }
     
@@ -254,12 +250,31 @@ public abstract class Graph implements Serializable
      public void setInductorAmount(int amount) {
   	     this.inductorAmount = amount;
      }
+     
+     public int getPotAmount(){
+    	 return this.potAmount;
+     }
+     
+     
+     public void setPotAmount(int amount) {
+  	     this.potAmount = amount;
+     }
+     
+     public int getWireAmount(){
+    	 return this.inductorAmount;
+     }
+     
+     
+     public void setWireAmount(int amount) {
+  	     this.wireAmount = amount;
+     }
       
      public void setAmount() { 
  	    int resistor = 0; 
  	    int capacitor = 0; 
  	    int inductor = 0; 
  	    int potentiometer = 0; 
+ 	    int wire = 0;
  	    for (Node n : nodes)
  	    {
  	    	if(n.getComponent() == "Resistor") {
@@ -271,11 +286,18 @@ public abstract class Graph implements Serializable
  	    	else if(n.getComponent() == "Inductor") {
  	    		inductor++;
  	    	}
+ 	    	else if(n.getComponent() == "Potentiometer") {
+ 	    		potentiometer++;
+ 	    	}
+ 	    	else if(n.getComponent() == "Wire") {
+ 	    		wire++;
+ 	    	}
  	    }     
  	    resistorAmount = resistor;
  	    capacitorAmount = capacitor;
  	    inductorAmount = inductor;
  	    potAmount = potentiometer;
+ 	    wireAmount = wire;
      }
      
      public void addAmount(String component) {
@@ -290,6 +312,9 @@ public abstract class Graph implements Serializable
      	}
      	else if(component == "Potentiometer"){
      		potAmount++;
+     	}	
+     	else if(component == "Wire"){
+     		wireAmount++;
      	}	
      }
      
@@ -313,13 +338,16 @@ public abstract class Graph implements Serializable
 	    	if(n.getComponent() == "Resistor" 
 	    			|| n.getComponent() == "Capacitor" 
 	    			|| n.getComponent() == "Inductor" 
-	    			|| n.getComponent() == "Potentiometer") {
+	    			|| n.getComponent() == "Potentiometer"
+	    			|| n.getComponent() == "Wire") {
 	    		
 	    		price = price + n.getPrice();
 	    	}
 	    }  
 	    total = price;
     }
+    
+    
     public void setOccupied(int a, int b, boolean c){
     	if(-1<a && a<14 && -1 < b && b < 10) {
     	occupied[a][b]= c;
@@ -334,11 +362,12 @@ public abstract class Graph implements Serializable
     	}
     }
     
-    private double total ;
-    private int resistorAmount ;
-    private int capacitorAmount ;
+    private double total;
+    private int resistorAmount;
+    private int capacitorAmount;
     private int inductorAmount;
     private int potAmount;
+    private int wireAmount;
     
     private boolean occupied [][]= new boolean[14][10];
     private DecimalFormat df = new DecimalFormat("#.00");

@@ -36,10 +36,29 @@ public class GraphPanel extends JComponent {
 					selected = n;
 					dragStartPoint = mousePoint;
 					dragStartBounds = n.getBounds();
+				
 				} else {
 					selected = null;
 				}
-			} else if (tool instanceof Node && graph.findNode(mousePoint) == null
+				
+			}
+			if (tool == "rotate") {
+				int xCord = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
+				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
+				if(n instanceof Node && n.getOrientation() == "vertical") {
+					n.setOrientation("horizontal");
+					// todo insert if horizontal occupied
+					
+					
+				}
+				else if(n instanceof Node && n.getOrientation() == "horizontal"){
+					n.setOrientation("vertical");
+					// todo insert if vertical free
+				}
+				revalidate();
+				repaint();
+			}
+			else if (tool instanceof Node && graph.findNode(mousePoint) == null
 					&& graph.getComponentAmount() < 15) {
 				Node prototype = (Node) tool;
 				Node newNode = (Node) prototype.clone();
@@ -61,6 +80,7 @@ public class GraphPanel extends JComponent {
 					dragStartBounds = n.getBounds();
 					
 				}
+				
 			} else if (tool instanceof Edge) {
 				
 				if (n != null)
@@ -216,6 +236,17 @@ public class GraphPanel extends JComponent {
 		g2.setColor(oldColor);
 	}
 
+	
+	public static void rotateArrow(Graphics2D g2, int x, int y) {
+		Color oldColor = g2.getColor();
+		g2.setColor(Color.BLACK);
+		g2.drawArc(x, y, 20, 20, 230, -200);
+		g2.draw(new Line2D.Double(x+20, y, x+20, y + 5));
+		g2.draw(new Line2D.Double(x+15, y + 8, x+20, y + 5));
+		g2.setColor(oldColor);
+	}
+	
+	
 	public Dimension getPreferredSize() {
 		Rectangle2D bounds = graph.getBounds((Graphics2D) getGraphics());
 		return new Dimension((int) bounds.getMaxX(), (int) bounds.getMaxY());
