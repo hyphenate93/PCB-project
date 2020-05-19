@@ -197,28 +197,6 @@ public abstract class Graph implements Serializable
     {
         return Collections.unmodifiableList(edges);
     }
-   
-    
-    public JTextArea getText() {
-    	return text;
-    }
-        
-    public void setupText() {
-    	text.setBackground(Color.YELLOW);
-    	text.setLineWrap(true);
-    	text.setEditable(false);
-    	text.setFont(new Font("Segoe Script", Font.BOLD, 20));
-    }
-    
-    public void updateText() {
- 	   	text.setText("ShoppingList: \n\n\n" 
- 	   				+ resistorAmount + "x Resistor\n"
- 	   			    + capacitorAmount + "x Capacitor\n"
- 	   				+ inductorAmount + "x Inductor\n"
- 	   				+ potAmount + "x Potentiometer\n"
- 	   				+ wireAmount + "x Wire\n\n\n\n\n\n\n\n\n"
- 	   				+ "total cost: \n" + getPrice()+"$");
-    }
     
     public int getResistorAmount(){
  	    return this.resistorAmount;
@@ -277,19 +255,19 @@ public abstract class Graph implements Serializable
  	    int wire = 0;
  	    for (Node n : nodes)
  	    {
- 	    	if(n.getComponent() == "Resistor") {
+ 	    	if(n.getComponent().equals("Resistor")) {
  	    		resistor++;
  	    	}
- 	    	else if(n.getComponent() == "Capacitor") {
+ 	    	else if(n.getComponent().equals("Capacitor")) {
  	    		capacitor++;
  	    	}
- 	    	else if(n.getComponent() == "Inductor") {
+ 	    	else if(n.getComponent().equals("Inductor")) {
  	    		inductor++;
  	    	}
- 	    	else if(n.getComponent() == "Potentiometer") {
+ 	    	else if(n.getComponent().equals("Potentiometer")) {
  	    		potentiometer++;
  	    	}
- 	    	else if(n.getComponent() == "Wire") {
+ 	    	else if(n.getComponent().equals("Wire")) {
  	    		wire++;
  	    	}
  	    }     
@@ -301,19 +279,19 @@ public abstract class Graph implements Serializable
      }
      
      public void addAmount(String component) {
-     	if(component == "Resistor"){
+     	if(component.equals("Resistor")) {
      		resistorAmount++;
      	}
-     	else if(component == "Capacitor"){
+     	else if(component.equals("Capacitor")){
      		capacitorAmount++;
      	}
-     	else if(component == "Inductor"){
+     	else if(component.equals("Inductor")) {
      		inductorAmount++;
      	}
-     	else if(component == "Potentiometer"){
+     	else if(component.equals("Potentiometer")) {
      		potAmount++;
      	}	
-     	else if(component == "Wire"){
+     	else if(component.equals("Wire")){
      		wireAmount++;
      	}	
      }
@@ -335,11 +313,11 @@ public abstract class Graph implements Serializable
     	double price = 0.0; 
 	    for (Node n : nodes)
 	    {
-	    	if(n.getComponent() == "Resistor" 
-	    			|| n.getComponent() == "Capacitor" 
-	    			|| n.getComponent() == "Inductor" 
-	    			|| n.getComponent() == "Potentiometer"
-	    			|| n.getComponent() == "Wire") {
+	    	if(n.getComponent().equals("Resistor") 
+	    			|| n.getComponent().equals("Capacitor") 
+	    			|| n.getComponent().equals("Inductor") 
+	    			|| n.getComponent().equals("Potentiometer")
+	    			|| n.getComponent().equals("Wire")) {
 	    		
 	    		price = price + n.getPrice();
 	    	}
@@ -362,6 +340,18 @@ public abstract class Graph implements Serializable
     	}
     }
     
+    public void updateText() {
+
+    	GraphFrame.getText().setText("ShoppingList: \n\n\n" 
+	   				+ resistorAmount + "x Resistor\n"
+	   			    + capacitorAmount + "x Capacitor\n"
+	   				+ inductorAmount + "x Inductor\n"
+	   				+ potAmount + "x Potentiometer\n"
+	   				+ wireAmount + "x Wire\n\n\n\n\n\n\n\n\n"
+	   				+ "total cost: \n" + getPrice()+"$");
+	   				
+  }
+    
     private double total;
     private int resistorAmount;
     private int capacitorAmount;
@@ -371,7 +361,6 @@ public abstract class Graph implements Serializable
     
     private boolean occupied [][]= new boolean[14][10];
     private DecimalFormat df = new DecimalFormat("#.00");
-    private JTextArea text = new JTextArea(5,10); 
     private int squareSize = 50;
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;

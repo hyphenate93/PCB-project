@@ -14,14 +14,14 @@ public class GraphPanel extends JComponent {
       Constructs a graph.
       @param aToolBar the tool bar with the node and edge tools
       @param aGraph the graph to be displayed and edited
-   */
-   public GraphPanel(ToolBar aToolBar, Graph aGraph)
-   {
-      toolBar = aToolBar;
-      graph = aGraph;
-      setBackground(Color.WHITE);
+	*/
+	public GraphPanel(ToolBar aToolBar, Graph aGraph)
+	{
+		toolBar = aToolBar;
+		graph = aGraph;
+		setBackground(Color.WHITE);
 
-  	addMouseListener(new MouseAdapter() {
+		addMouseListener(new MouseAdapter() {
 		public void mousePressed(MouseEvent event) {
 			Point2D mousePoint = event.getPoint();
 			Node n = graph.findNode(mousePoint);
@@ -40,20 +40,17 @@ public class GraphPanel extends JComponent {
 				} else {
 					selected = null;
 				}
-				
 			}
-			if (tool == "rotate") {
+			if (tool == "rotate" && graph.findNode(mousePoint) != null) {
 				int xCord = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
 				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
-				if(n instanceof Node && n.getOrientation() == "vertical") {
+				if(n instanceof Node && n.getOrientation().equals("vertical")) {
 					n.setOrientation("horizontal");
-					// todo insert if horizontal occupied
-					
-					
+					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,occupied);
 				}
-				else if(n instanceof Node && n.getOrientation() == "horizontal"){
+				else if(n instanceof Node && n.getOrientation().equals("horizontal")){
 					n.setOrientation("vertical");
-					// todo insert if vertical free
+					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,free);
 				}
 				revalidate();
 				repaint();
@@ -104,24 +101,23 @@ public class GraphPanel extends JComponent {
 					selected = newEdge;
 			}
 
-			if (selected != null && mousePoint.getX() >= 0 && mousePoint.getX() < 705 && mousePoint.getY() > 0
+			if (selected != null && mousePoint.getX() >= 55 && mousePoint.getX() < 705 && mousePoint.getY() > 0
 					&& mousePoint.getY() < 505) {
 				
 				int xCord = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
 				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
 
 				if(graph.getOccupied((xCord+5)/50,(yCord+5)/50)==free) {
-				n.setX(xCord + 5);
-				n.setY(yCord + 5);
-				graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,occupied);
+					n.setX(xCord + 5);
+					n.setY(yCord + 5);
+					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,occupied);
 				}
 				else {
-					if(n.getX()!=xCord + 5 &&n.getY()!=xCord + 5) {
+					if (n.getX()!=xCord + 5 && n.getY()!=xCord + 5) {
 					n.setX(800);
 					n.setY(105);
 					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,free);
 				}}
-			
 			}
 			revalidate();
 			repaint();

@@ -12,51 +12,51 @@ import javax.swing.event.*;
 */
 public class GraphFrame extends JFrame
 {
-   /**
+	/**
       Constructs a graph frame that displays a given graph.
       @param graph the graph to display
-   */
-   public GraphFrame(final Graph graph)
-   {
-      setSize(FRAME_WIDTH, FRAME_HEIGHT);
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	 */
+   	public GraphFrame(final Graph graph)
+	{
+   		setSize(FRAME_WIDTH, FRAME_HEIGHT);
+   		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-      this.graph = graph;
+   		this.graph = graph;
 
-      constructFrameComponents();
-      // set up menus
+   		constructFrameComponents();
+   		// set up menus
 
-      JMenuBar menuBar = new JMenuBar();
-      setJMenuBar(menuBar);
-      JMenu fileMenu = new JMenu("File");
-      menuBar.add(fileMenu);
+   		JMenuBar menuBar = new JMenuBar();
+   		setJMenuBar(menuBar);
+   		JMenu fileMenu = new JMenu("File");
+   		menuBar.add(fileMenu);
 
-      JMenuItem openItem = new JMenuItem("Open");
-      openItem.addActionListener(new
-         ActionListener()
-         {
+   		JMenuItem openItem = new JMenuItem("Open");
+   		openItem.addActionListener(new
+   				ActionListener()
+   		{
             public void actionPerformed(ActionEvent event)
             {
                openFile();
             }
-         });
-      fileMenu.add(openItem);
+   		});
+   		fileMenu.add(openItem);
 
-      JMenuItem saveItem = new JMenuItem("Save");
-      saveItem.addActionListener(new
-         ActionListener()
-         {
+   		JMenuItem saveItem = new JMenuItem("Save");
+   		saveItem.addActionListener(new
+   				ActionListener()
+        {
             public void actionPerformed(ActionEvent event)
             {
                saveFile();
             }
-         });
-      fileMenu.add(saveItem);
+        });
+   		fileMenu.add(saveItem);
 
-      JMenuItem exitItem = new JMenuItem("Exit");
-      exitItem.addActionListener(new
-         ActionListener()
-         {
+   		JMenuItem exitItem = new JMenuItem("Exit");
+   		exitItem.addActionListener(new
+   				ActionListener()
+        {
             public void actionPerformed(ActionEvent event)
             {
                System.exit(0);
@@ -91,52 +91,54 @@ public class GraphFrame extends JFrame
 //      editMenu.add(propertiesItem);
       menuBar.add(editMenu);
       
-   }
+   	}
 
-   /**
+   	/**
       Constructs the tool bar and graph panel.
-   */
-   private void constructFrameComponents()
-   {
-      toolBar = new ToolBar(graph);
-      panel = new GraphPanel(toolBar, graph);
-      scrollPane = new JScrollPane(panel);
-      graph.setupText();
-      graph.updateText();
-      this.add(graph.getText(), BorderLayout.EAST);
-      this.add(toolBar, BorderLayout.WEST);
-      this.add(scrollPane, BorderLayout.CENTER);
-   }
+    */
+   	private void constructFrameComponents()
+   	{
+   		toolBar = new ToolBar(graph);
+   		panel = new GraphPanel(toolBar, graph);
+   		scrollPane = new JScrollPane(panel);
+   		text = new JTextArea(5,10); 
+   		setupText();
+   		updateText();
+   		this.add(text, BorderLayout.EAST);
+   		this.add(toolBar, BorderLayout.WEST);
+   		this.add(scrollPane, BorderLayout.CENTER);
+   	}
+   	
 
-   /**
+   	/**
       Asks the user to open a graph file.
-   */
-   private void openFile()
-   {
-      // let user select file
+   	 */
+   	private void openFile()
+   	{
+   		// let user select file
 
-      JFileChooser fileChooser = new JFileChooser();
-      int r = fileChooser.showOpenDialog(this);
-      if (r == JFileChooser.APPROVE_OPTION)
-      {
-         // open the file that the user selected
-         try
-         {
-            File file = fileChooser.getSelectedFile();
+   		JFileChooser fileChooser = new JFileChooser();
+   		int r = fileChooser.showOpenDialog(this);
+   		if (r == JFileChooser.APPROVE_OPTION)
+   		{
+   			// open the file that the user selected
+        try
+        {
+        	File file = fileChooser.getSelectedFile();
             ObjectInputStream in = new ObjectInputStream(
                new FileInputStream(file));
             graph = (Graph) in.readObject();
             in.close();
             this.remove(scrollPane);
             this.remove(toolBar);
+            this.remove(text);
             constructFrameComponents();
-           
-            validate();
-            repaint();
             graph.setAmount();
+            updateText();
+            revalidate();
+            repaint();
             
-            graph.updatePrice();
-            graph.updateText();
+
          }
          catch (IOException exception)
          {
@@ -177,8 +179,34 @@ public class GraphFrame extends JFrame
          }
       }
    }
-
    
+   public void setupText() {
+   	
+   		text.setBackground(Color.YELLOW);
+   		text.setLineWrap(true);
+   		text.setEditable(false);
+   		text.setFont(new Font("Segoe Script", Font.BOLD, 20));
+   }
+   
+   public void updateText() {
+	   	 text.setText("ShoppingList: \n\n\n" 
+	   				+ graph.getResistorAmount() + "x Resistor\n"
+	   			    + graph.getCapacitorAmount() + "x Capacitor\n"
+	   				+ graph.getInductorAmount() + "x Inductor\n"
+	   				+ graph.getPotAmount() + "x Potentiometer\n"
+	   				+ graph.getWireAmount() + "x Wire\n\n\n\n\n\n\n\n\n"
+	   				+ "total cost: \n" + graph.getPrice()+"$");
+   }
+   
+   public static JTextArea getText() {
+	   return text;
+   }
+   
+   public void setGraphText(String s) {
+	   text.setText(s);
+   }
+   
+   private static JTextArea text;
    private Graph graph;
    private GraphPanel panel;
    private JScrollPane scrollPane;
