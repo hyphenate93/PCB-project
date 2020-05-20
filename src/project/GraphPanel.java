@@ -55,10 +55,12 @@ public class GraphPanel extends JComponent {
 					&& graph.getComponentAmount() < 15) {
 				Node prototype = (Node) tool;
 				Node newNode = (Node) prototype.clone();
-
+				
 				boolean added = graph.add(newNode, mousePoint);
 				
 				if (added) {
+					newNode.setX((newNode.getX()+5));
+					newNode.setY((newNode.getY()+5));
 					graph.setOccupied((int)(newNode.getX())/50,(int)(newNode.getY())/50,newNode);
 					selected = newNode;
 					dragStartPoint = mousePoint;
@@ -96,7 +98,7 @@ public class GraphPanel extends JComponent {
 					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,n);
 				}
 				else {
-					if(!(n.equals(graph.getOccupied((xCord+5)/50,(yCord+5)/50)))
+					if(!(n.equals(graph.getOccupied((xCord)/50,(yCord)/50)))
 							&& graph.getOccupied((xCord+5)/50,(yCord+5)/50)!= null) { 
 						
 						n.setX(800);
@@ -107,9 +109,9 @@ public class GraphPanel extends JComponent {
 			revalidate();
 			repaint();
 
-			lastMousePoint = null;
+			
 			dragStartBounds = null;
-			rubberBandStart = null;
+			
 		}
 	});
 
@@ -133,7 +135,7 @@ public class GraphPanel extends JComponent {
                  
                }
              
-               lastMousePoint = mousePoint;
+               
                repaint();                
             }
          });
@@ -204,8 +206,6 @@ public class GraphPanel extends JComponent {
 
 	private Graph graph;
 	private ToolBar toolBar;
-	private Point2D lastMousePoint;
-	private Point2D rubberBandStart;
 	private Point2D dragStartPoint;
 	private Rectangle2D dragStartBounds;
 	private Object selected;
