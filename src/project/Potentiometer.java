@@ -148,12 +148,10 @@ public class Potentiometer implements Node {
 	@Override
 	public void setConnection(boolean a, String b) {
 		
-		if( b.equals("left")) {left = a;}
-		if( b.equals("right")) {left = a;}
-		if(b.equals("up")) {left = a;}
-		if(b.equals("down")) {left = a;}
-		
-		
+		if(b.equals("left")) {left = a;}
+ 		if(b.equals("right")) {right = a;}
+ 		if(b.equals("up")) {up = a;}
+ 		if(b.equals("down")) {down = a;}
 	}
 }
 

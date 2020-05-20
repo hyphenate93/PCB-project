@@ -89,14 +89,14 @@ public abstract class Graph implements Serializable {
 		}
 
 		for (Node n : nodes) {
+			if(n.getConnection() == true) {
+				g2.setColor(Color.BLUE);
+				g2.fillRoundRect((int)n.getX(), (int)n.getY(), 10, 10,10,10);
+				
+			}	
 			g2.setColor(Color.BLACK);
 			n.draw(g2);
-		if(n.getConnection()==true) {
-			g2.setColor(Color.BLUE);
-			g2.fillRoundRect((int)n.getX(), (int)n.getY(), 10, 10,10,10);
 			
-			
-		}	
 		}
 	}
 
@@ -189,6 +189,7 @@ public abstract class Graph implements Serializable {
 	}
 
 	public void setAmount() {
+
 		int resistor = 0;
 		int capacitor = 0;
 		int inductor = 0;
@@ -215,6 +216,7 @@ public abstract class Graph implements Serializable {
 	}
 
 	public void addAmount(String component) {
+
 		if (component.equals("Resistor")) {
 			resistorAmount++;
 		} else if (component.equals("Capacitor")) {
@@ -229,6 +231,7 @@ public abstract class Graph implements Serializable {
 	}
 
 	public String getPrice() {
+
 		String price = "";
 		if (total < 0.1) {
 			return "0.00";
@@ -241,8 +244,10 @@ public abstract class Graph implements Serializable {
 	public void updatePrice() {
 		double price = 0.0;
 		for (Node n : nodes) {
-			if (n.getComponent().equals("Resistor") || n.getComponent().equals("Capacitor")
-					|| n.getComponent().equals("Inductor") || n.getComponent().equals("Potentiometer")
+			if (n.getComponent().equals("Resistor") 
+					|| n.getComponent().equals("Capacitor")
+					|| n.getComponent().equals("Inductor") 
+					|| n.getComponent().equals("Potentiometer")
 					|| n.getComponent().equals("Wire")) {
 
 				price = price + n.getPrice();
@@ -252,6 +257,7 @@ public abstract class Graph implements Serializable {
 	}
 
 	public void setOccupied(int a, int b, Node c) {
+
 		if (-1 < a && a < 14 && -1 < b && b < 10) {
 
 			occupied[a][b] = c;
@@ -259,6 +265,7 @@ public abstract class Graph implements Serializable {
 	}
 
 	public Node getOccupied(int a, int b) {
+
 		if (-1 < a && a < 14 && -1 < b && b < 10) {
 			return occupied[a][b];
 		} else {
@@ -267,52 +274,65 @@ public abstract class Graph implements Serializable {
 	}
 
 	public void setConnections() {
-		for (Node n : nodes) {
-			if (n.getConnection() == true)
-				System.out.println(n.getConnection());
-		}
 
+		System.out.println("testing Connection mf");
 		for (Node n : nodes) {
-			int xCheck = (int) n.getX() / 50;
-			int yCheck = (int) n.getY() / 50;
+			int xCheck = (int)(n.getX()+5) / 50;
+			int yCheck = (int)(n.getY()+5) / 50;
 			
-			if (n.getOrientation().equals("horizontal")) {
-
-				if (getOccupied(xCheck + 1, yCheck) != null) {
-
-					if (getOccupied(xCheck + 1, yCheck).getOrientation().equals("horizontal")) {
-
-						n.setConnection(true, "right");
-					}
-					
-
-				}
-				else {
-					n.setConnection(false, "right");
-				}
-				if (getOccupied(xCheck - 1, yCheck) != null) {
-
-					if (getOccupied(xCheck - 1, yCheck).getOrientation().equals("horizontal")) {
-
-						n.setConnection(true, "left");
-					}
-					
-
-				}
-				else {
+			if(n.getOrientation().equals("horizontal")) {
+				
+				if(getOccupied(xCheck - 1, yCheck) != null) {
+					n.setConnection(true, "left");			
+				
+				} else {
 					n.setConnection(false, "left");
 				}
-			} 
+			} 	
 			
+			if(getOccupied(xCheck + 1, yCheck) != null) {	
+				if(getOccupied(xCheck + 1, yCheck).getOrientation().equals("horizontal")) {	
+					n.setConnection(true, "right");
+				}
+				else {
+				 	n.setConnection(false, "right");
+			 	}
 			
+			}
+			
+			if(n.getOrientation().equals("vertical")) {
+				
+				if(getOccupied(xCheck, yCheck - 1) != null) {
+					n.setConnection(true, "up");			
+				
+				} else {
+					n.setConnection(false, "up");
+				}
+			}
+			
+			if(getOccupied(xCheck, yCheck + 1) != null) {	
+				if(getOccupied(xCheck, yCheck + 1).getOrientation().equals("vertical")) {	
+					n.setConnection(true, "down");
+				}
+				else {
+				 	n.setConnection(false, "down");
+			 	}
+			
+			}
+		}	
+		for (Node n : nodes) {
+			if (n.getConnection() == true) {
+				System.out.println(n.getConnection() + " " + n.getComponent());
+			}
 		}
 	}
 
 	public void updateText() {
 		GraphFrame.getText()
-				.setText("ShoppingList: \n\n\n" + resistorAmount + "x Resistor\n" + capacitorAmount + "x Capacitor\n"
-						+ inductorAmount + "x Inductor\n" + potAmount + "x Potentiometer\n" + wireAmount
-						+ "x Wire\n\n\n\n\n\n\n\n\n" + "total cost: \n" + getPrice() + "$");
+				.setText("ShoppingList: \n\n\n" 
+						+ resistorAmount + "x Resistor\n" + capacitorAmount + "x Capacitor\n"
+						+ inductorAmount + "x Inductor\n" + potAmount + "x Potentiometer\n" 
+						+ wireAmount + "x Wire\n\n\n\n\n\n\n\n\n" 
+						+ "total cost: \n" + getPrice() + "$");
 	}
-
 }

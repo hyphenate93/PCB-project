@@ -38,22 +38,34 @@ public class GraphPanel extends JComponent {
 					selected = null;
 				}
 			}
-			if (tool == "rotate" && graph.findNode(mousePoint) != null) {
+			if(tool == "rotate" && graph.findNode(mousePoint) != null) {
+				
 				int xCord = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
 				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
+				
 				if(n instanceof Node && n.getOrientation().equals("vertical")) {
 					n.setOrientation("horizontal");
-					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,n);
+//					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,n);			
 				}
+				
 				else if(n instanceof Node && n.getOrientation().equals("horizontal")){
 					n.setOrientation("vertical");
-					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,null);
+//					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,null);
 				}
 				revalidate();
 				repaint();
+			}	
+			
+			if(tool == "connection") {
+				graph.setConnections();
+				repaint();
 			}
-			else if (tool instanceof Node && graph.findNode(mousePoint) == null
+			
+			else if (tool instanceof Node 
+					&& graph.findNode(mousePoint) == null
 					&& graph.getComponentAmount() < 15) {
+				
+				
 				Node prototype = (Node) tool;
 				Node newNode = (Node) prototype.clone();
 				
@@ -148,7 +160,6 @@ public class GraphPanel extends JComponent {
 
 		Graphics2D g2 = (Graphics2D) g;
 		graph.draw(g2);
-		graph.setConnections();
 		if (selected instanceof Node) {
 			Rectangle2D grabberBounds = ((Node) selected).getBounds();
 
