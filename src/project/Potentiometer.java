@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 @SuppressWarnings("serial")
 public class Potentiometer implements Node {
-	 private boolean up,down,right,left = false;
+	 private boolean up,right,left = false;
 		private String component;
 		private String orientation;
 		private double price;
@@ -135,23 +135,18 @@ public class Potentiometer implements Node {
 		return this.orientation;
 	}  
 	
+	 public boolean getConnection() {
 
-	 @Override
-	public boolean getConnection() {
-
-		 if (up!=false || down !=false || right !=false || left !=false) {
-			 return true;
-		 }
-		return false;
-	}
-
-	@Override
-	public void setConnection(boolean a, String b) {
-		
-		if(b.equals("left")) {left = a;}
- 		if(b.equals("right")) {right = a;}
- 		if(b.equals("up")) {up = a;}
- 		if(b.equals("down")) {down = a;}
-	}
+ 		 if (up!=false || right !=false || left !=false) {
+ 			 return true;
+ 		 }
+ 		 return false;
+ 	 }
+	
+ 	 public void setConnection(boolean a, String b) {
+ 		 if(b.equals("left")) {left = a;}
+ 		 if(b.equals("right")) {right = a;}
+ 		 if(b.equals("up")) {up = a;}
+ 	 }
 }
 

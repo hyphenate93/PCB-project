@@ -16,7 +16,7 @@ public class Wire implements Node {
 	 private double size;
 	 private Color color;  
 	 private static final int DEFAULT_SIZE = 20;
-	 private boolean up,down,right,left = false;
+	 private boolean up,right,left = false;
 
 	public Wire(Color aColor) {
 		component = "Wire";
@@ -135,23 +135,18 @@ public class Wire implements Node {
  		 return this.orientation;
  	 } 
  	 
- 	 @Override
- 	public boolean getConnection() {
+ 	 public boolean getConnection() {
 
- 		 if (up!=false || down !=false || right !=false || left !=false) {
+ 		 if (up!=false || right !=false || left !=false) {
  			 return true;
  		 }
- 		return false;
- 	}
-
- 	@Override
- 	public void setConnection(boolean a, String b) {
- 		
- 		if(b.equals("left")) {left = a;}
- 		if(b.equals("right")) {right = a;}
- 		if(b.equals("up")) {up = a;}
- 		if(b.equals("down")) {down = a;}
- 	}
-
+ 		 return false;
+ 	 }
+	
+ 	 public void setConnection(boolean a, String b) {
+ 		 if(b.equals("left")) {left = a;}
+ 		 if(b.equals("right")) {right = a;}
+ 		 if(b.equals("up")) {up = a;}
+ 	 }
 	
 }

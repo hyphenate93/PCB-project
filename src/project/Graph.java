@@ -89,14 +89,12 @@ public abstract class Graph implements Serializable {
 		}
 
 		for (Node n : nodes) {
-			if(n.getConnection() == true) {
-				g2.setColor(Color.BLUE);
-				g2.fillRoundRect((int)n.getX(), (int)n.getY(), 10, 10,10,10);
-				
-			}	
 			g2.setColor(Color.BLACK);
 			n.draw(g2);
-			
+			if(n.getConnection() == true) {
+				g2.setColor(Color.YELLOW);
+				g2.fillRoundRect((int)n.getX(), (int)n.getY(), 10, 10,10,10);
+			}	
 		}
 	}
 
@@ -272,57 +270,74 @@ public abstract class Graph implements Serializable {
 			return null;
 		}
 	}
+	
+	public void resetConnections() {
+		for (Node n : nodes) {
+			n.setConnection(false, "left");
+			n.setConnection(false, "right");
+			n.setConnection(false, "up");
+		}
+	}
 
 	public void setConnections() {
 
-		System.out.println("testing Connection mf");
+		System.out.println("Finding Connections");
+
 		for (Node n : nodes) {
 			int xCheck = (int)(n.getX()+5) / 50;
 			int yCheck = (int)(n.getY()+5) / 50;
-			
+	
+			//component to the left or under
 			if(n.getOrientation().equals("horizontal")) {
 				
 				if(getOccupied(xCheck - 1, yCheck) != null) {
 					n.setConnection(true, "left");			
-				
-				} else {
-					n.setConnection(false, "left");
 				}
 			} 	
 			
-			if(getOccupied(xCheck + 1, yCheck) != null) {	
+			if(n.getOrientation().equals("horizontal")) {
+				if(getOccupied(xCheck - 1, yCheck + 1) != null) {
+					if(getOccupied(xCheck - 1, yCheck + 1).getOrientation().equals("vertical")) {
+						n.setConnection(true, "left");
+					}
+				}
+			}
+				
+			
+			// component to the right or under (vertical orientation)
+			if(getOccupied(xCheck + 1, yCheck) != null) {
+				
 				if(getOccupied(xCheck + 1, yCheck).getOrientation().equals("horizontal")) {	
 					n.setConnection(true, "right");
 				}
-				else {
-				 	n.setConnection(false, "right");
-			 	}
-			
+			}	
+			if(getOccupied(xCheck, yCheck + 1) != null) {
+				if(getOccupied(xCheck, yCheck + 1).getOrientation().equals("vertical")) {
+					n.setConnection(true, "right");
+				}
 			}
 			
+			// Component over this one
 			if(n.getOrientation().equals("vertical")) {
 				
 				if(getOccupied(xCheck, yCheck - 1) != null) {
+	
 					n.setConnection(true, "up");			
+				}
+			}	
 				
-				} else {
-					n.setConnection(false, "up");
+			if(getOccupied(xCheck + 1, yCheck - 1) != null) {
+
+				if(getOccupied(xCheck + 1, yCheck - 1).getOrientation().equals("horizontal")) {
+					n.setConnection(true, "up");
 				}
 			}
 			
-			if(getOccupied(xCheck, yCheck + 1) != null) {	
-				if(getOccupied(xCheck, yCheck + 1).getOrientation().equals("vertical")) {	
-					n.setConnection(true, "down");
-				}
-				else {
-				 	n.setConnection(false, "down");
-			 	}
-			
-			}
 		}	
+		System.out.println("Found:");
 		for (Node n : nodes) {
 			if (n.getConnection() == true) {
-				System.out.println(n.getConnection() + " " + n.getComponent());
+				System.out.println("  " + n.getComponent());
 			}
 		}
 	}

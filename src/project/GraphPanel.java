@@ -26,7 +26,7 @@ public class GraphPanel extends JComponent {
 			Point2D mousePoint = event.getPoint();
 			Node n = graph.findNode(mousePoint);
 			Object tool = toolBar.getSelectedTool();
-
+			graph.resetConnections();
 			if (tool == null) // select
 			{
 				if (n != null) {
@@ -40,17 +40,19 @@ public class GraphPanel extends JComponent {
 			}
 			if(tool == "rotate" && graph.findNode(mousePoint) != null) {
 				
-				int xCord = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
-				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
+//				int xCord = (int) (n.getX() + (double) 50 / 2) / 50 * 50;
+//				int yCord = (int) (n.getY() + (double) 50 / 2) / 50 * 50;
 				
 				if(n instanceof Node && n.getOrientation().equals("vertical")) {
 					n.setOrientation("horizontal");
-//					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,n);			
+//					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,n);		
+					graph.resetConnections();
 				}
 				
 				else if(n instanceof Node && n.getOrientation().equals("horizontal")){
 					n.setOrientation("vertical");
 //					graph.setOccupied((xCord + 5)/50,(yCord + 5)/50,null);
+					graph.resetConnections();
 				}
 				revalidate();
 				repaint();
@@ -76,28 +78,26 @@ public class GraphPanel extends JComponent {
 					newNode.setY((newNode.getY()+5));
 					graph.setOccupied((int)(newNode.getX())/50,(int)(newNode.getY())/50,newNode);
 					selected = newNode;
+					graph.resetConnections();
 					dragStartPoint = mousePoint;
 					dragStartBounds = newNode.getBounds();
 					graph.addAmount(prototype.getComponent());
 					graph.updatePrice();
 					graph.updateText();
-				} else if (n != null) {
 
+				} else if (n != null) {
+					graph.resetConnections();
 					selected = n;
 					dragStartPoint = mousePoint;
 					dragStartBounds = n.getBounds();
-					
 				}
-				
-			}		
+			}	
 			repaint();
-           
 		}
 
 		public void mouseReleased(MouseEvent event) {
 			
 			Point2D mousePoint = event.getPoint();
-			
 			Node n = (Node) selected;
 
 			if (selected != null && mousePoint.getX() >= 55 && mousePoint.getX() < 705 && mousePoint.getY() > 0
@@ -144,14 +144,9 @@ public class GraphPanel extends JComponent {
                         + mousePoint.getX() - dragStartPoint.getX(),
                         dragStartBounds.getY() - bounds.getY() 
                         + mousePoint.getY() - dragStartPoint.getY());
-                   
-                  }
-                 
-               }
-             
-               
-               repaint();    
-               
+                  }       
+               }  
+               repaint();        
             }
          });
 	}
@@ -208,6 +203,16 @@ public class GraphPanel extends JComponent {
 		g2.drawArc(x, y, 20, 20, 230, -200);
 		g2.draw(new Line2D.Double(x+20, y, x+20, y + 5));
 		g2.draw(new Line2D.Double(x+15, y + 8, x+20, y + 5));
+		g2.setColor(oldColor);
+	}
+	
+	public static void checkConnection(Graphics2D g2, int x, int y) {
+		Color oldColor = g2.getColor();
+		g2.setColor(Color.YELLOW);
+		g2.fill(new Ellipse2D.Double(x, y, 20, 20));
+		g2.setColor(Color.BLACK);
+		g2.draw(new Ellipse2D.Double(x, y, 20, 20));
+		g2.fillRect(x + 5, y + 18, 11, 5);
 		g2.setColor(oldColor);
 	}
 	

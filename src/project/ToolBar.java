@@ -64,7 +64,7 @@ public class ToolBar extends JPanel
 			public int getIconWidth() { return BUTTON_SIZE; }
 			public void paintIcon(Component c, Graphics g, int x, int y) {
 				Graphics2D g2 = (Graphics2D) g;
-				GraphPanel.rotateArrow(g2, x + 2, y + 2);   
+				GraphPanel.checkConnection(g2, x + 2, y + 2);   
 			}	    
 		});
     	      
