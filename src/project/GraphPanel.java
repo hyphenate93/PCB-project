@@ -8,6 +8,7 @@ import javax.swing.*;
 /**
  * A panel to draw a graph
  */
+@SuppressWarnings("serial")
 public class GraphPanel extends JComponent {
 	/**
       Constructs a graph.
@@ -78,10 +79,11 @@ public class GraphPanel extends JComponent {
 				
 			}		
 			repaint();
+           
 		}
 
 		public void mouseReleased(MouseEvent event) {
-			Object tool = toolBar.getSelectedTool();
+			
 			Point2D mousePoint = event.getPoint();
 			
 			Node n = (Node) selected;
@@ -108,7 +110,7 @@ public class GraphPanel extends JComponent {
 			}
 			revalidate();
 			repaint();
-
+			
 			
 			dragStartBounds = null;
 			
@@ -136,7 +138,8 @@ public class GraphPanel extends JComponent {
                }
              
                
-               repaint();                
+               repaint();    
+               
             }
          });
 	}
@@ -144,10 +147,8 @@ public class GraphPanel extends JComponent {
 	public void paintComponent(Graphics g) {
 
 		Graphics2D g2 = (Graphics2D) g;
-		Rectangle2D bounds = getBounds();
-		Rectangle2D graphBounds = graph.getBounds(g2);
 		graph.draw(g2);
-
+		graph.setConnections();
 		if (selected instanceof Node) {
 			Rectangle2D grabberBounds = ((Node) selected).getBounds();
 
@@ -171,6 +172,7 @@ public class GraphPanel extends JComponent {
 		}
 		selected = null;
 		repaint();
+		 
 	}
 
 	/**

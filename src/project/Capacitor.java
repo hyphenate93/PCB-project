@@ -8,6 +8,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 
+@SuppressWarnings("serial")
 public class Capacitor implements Node {
 	 private boolean up,down,right,left = false;
 	 private String component;

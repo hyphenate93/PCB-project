@@ -9,6 +9,7 @@ import javax.swing.*;
    A tool bar that contains node and edge prototype icons.
    Exactly one icon is selected at any time.
 */
+@SuppressWarnings("serial")
 public class ToolBar extends JPanel
 {
     /**

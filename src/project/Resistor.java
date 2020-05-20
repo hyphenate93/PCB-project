@@ -6,6 +6,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+@SuppressWarnings("serial")
 public class Resistor implements Node {
 	 private boolean up,down,right,left = false;
 	private String component;

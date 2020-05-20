@@ -8,6 +8,7 @@ import javax.swing.*;
 /**
    This frame shows the toolbar and the graph.
 */
+@SuppressWarnings("serial")
 public class GraphFrame extends JFrame
 {
 	/**

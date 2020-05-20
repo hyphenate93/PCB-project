@@ -3,6 +3,7 @@ package project;
 import java.awt.Color;
 
 
+@SuppressWarnings("serial")
 public class ComponentGraph extends Graph
 {
 

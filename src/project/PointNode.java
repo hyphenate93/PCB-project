@@ -7,9 +7,10 @@ import java.awt.geom.*;
    An inivisible node that is used in the toolbar to draw an
    edge.
 */
+@SuppressWarnings("serial")
 public class PointNode implements Node
 {
-	 private boolean up,down,right,left;
+	
    /**
       Constructs a point node with coordinates (0, 0)
    */
