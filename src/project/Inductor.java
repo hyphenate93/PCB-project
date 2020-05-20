@@ -8,6 +8,16 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 public class Inductor implements Node {
+	
+   	private String component;
+ 	private String orientation;
+ 	private double price;
+ 	private double x;
+ 	private double y;
+ 	private double size;
+ 	private Color color;  
+  	private static final int DEFAULT_SIZE = 20;
+  	 private boolean up,down,right,left = false;
 
 	
 	
@@ -138,12 +148,24 @@ public class Inductor implements Node {
 		return this.orientation;
 	}  
 	
-   	private String component;
- 	private String orientation;
- 	private double price;
- 	private double x;
- 	private double y;
- 	private double size;
- 	private Color color;  
-  	private static final int DEFAULT_SIZE = 20;
+
+	 @Override
+	public boolean getConnection() {
+
+		 if (up!=false || down !=false || right !=false || left !=false) {
+			 return true;
+		 }
+		return false;
+	}
+
+	@Override
+	public void setConnection(boolean a, String b) {
+		
+		if( b.equals("left")) {left = a;}
+		if( b.equals("right")) {left = a;}
+		if(b.equals("up")) {left = a;}
+		if(b.equals("down")) {left = a;}
+		
+		
+	}
 }

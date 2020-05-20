@@ -55,7 +55,11 @@ public interface Node extends Serializable, Cloneable {
 	double getX();
 
 	double getY();
-
+	
+	boolean getConnection();
+	
+	void setConnection(boolean a, String b);
+	
 	void setX(double a);
 
 	void setY(double a);

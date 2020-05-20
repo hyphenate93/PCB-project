@@ -5,7 +5,18 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+@SuppressWarnings("serial")
 public class Wire implements Node {
+	
+	 private String component;
+	 private String orientation;
+	 private double price;
+	 private double x;
+	 private double y;
+	 private double size;
+	 private Color color;  
+	 private static final int DEFAULT_SIZE = 20;
+	 private boolean up,down,right,left = false;
 
 	public Wire(Color aColor) {
 		component = "Wire";
@@ -122,14 +133,27 @@ public class Wire implements Node {
 	
  	 public String getOrientation() {
  		 return this.orientation;
- 	 }   
+ 	 } 
+ 	 
+ 	 @Override
+ 	public boolean getConnection() {
+
+ 		 if (up!=false || down !=false || right !=false || left !=false) {
+ 			 return true;
+ 		 }
+ 		return false;
+ 	}
+
+ 	@Override
+ 	public void setConnection(boolean a, String b) {
+ 		
+ 		if( b.equals("left")) {left = a;}
+ 		if( b.equals("right")) {left = a;}
+ 		if(b.equals("up")) {left = a;}
+ 		if(b.equals("down")) {left = a;}
+ 		
+ 		
+ 	}
+
 	
- 	 private String component;
- 	 private String orientation;
- 	 private double price;
- 	 private double x;
- 	 private double y;
- 	 private double size;
- 	 private Color color;  
- 	 private static final int DEFAULT_SIZE = 20;
 }

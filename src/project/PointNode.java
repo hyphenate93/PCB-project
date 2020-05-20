@@ -9,6 +9,7 @@ import java.awt.geom.*;
 */
 public class PointNode implements Node
 {
+	 private boolean up,down,right,left;
    /**
       Constructs a point node with coordinates (0, 0)
    */
@@ -105,6 +106,18 @@ public void setOrientation(String s) {
 @Override
 public String getOrientation() {
 	return null;
+}
+
+@Override
+public boolean getConnection() {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+@Override
+public void setConnection(boolean a, String b) {
+	// TODO Auto-generated method stub
+	
 }   
 
 }

@@ -259,6 +259,9 @@ public abstract class Graph implements Serializable {
     		return null;
     	}
     }
+    public void getConnections() {
+    	
+    }
     
     public void updateText() {
     	GraphFrame.getText().setText("ShoppingList: \n\n\n" 
