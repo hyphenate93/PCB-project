@@ -74,8 +74,10 @@ public class GraphPanel extends JComponent {
 				boolean added = graph.add(newNode, mousePoint);
 				
 				if (added) {
-					newNode.setX((newNode.getX()+5));
-					newNode.setY((newNode.getY()+5));
+					int xCord = (int) (newNode.getX() + (double) 50 / 2) / 50 * 50;
+					int yCord = (int) (newNode.getY() + (double) 50 / 2) / 50 * 50;
+					newNode.setX((xCord+5));
+					newNode.setY((yCord+5));
 					graph.setOccupied((int)(newNode.getX())/50,(int)(newNode.getY())/50,newNode);
 					selected = newNode;
 					graph.resetConnections();
