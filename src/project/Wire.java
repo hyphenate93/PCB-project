@@ -5,6 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * @author Niklas Andersson
+ * @author Andreas Östlin
+ * 
+ */
 @SuppressWarnings("serial")
 public class Wire implements Node {
 	
@@ -15,16 +20,16 @@ public class Wire implements Node {
 	 private double y;
 	 private double size;
 	 private Color color;  
-	 private static final int DEFAULT_SIZE = 20;
+	 private static final int DEFAULT_SIZE = 50;
 	 private boolean up,right,left = false;
 
-	public Wire(Color aColor) {
+	public Wire() {
 		component = "Wire";
 		price = 0.10;
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
-		color = aColor;
+		color = Color.RED;
 		orientation = "horizontal";
 	}
 
@@ -49,23 +54,23 @@ public class Wire implements Node {
 	public void draw(Graphics2D g2) {
 		if(orientation == "vertical") {
 			
-			g2.setColor(Color.RED);
-			g2.drawArc((int)(x+size+15)+2, (int)(y-40), 50, 70, -135, -90);
-			g2.drawArc((int)(x+size+15)+1, (int)(y-40), 50, 70, -135, -90);
-			g2.drawArc((int)(x+size+15)+3, (int)(y-40), 50, 70, -135, -90);
+			g2.setColor(color);
+			g2.drawArc((int)x+36, (int)y-40, 50, 70, -135, -90);
+			g2.drawArc((int)x+37, (int)y-40, 50, 70, -135, -90);
+			g2.drawArc((int)x+38, (int)y-40, 50, 70, -135, -90);
 			g2.setColor(Color.BLACK);
-			g2.drawArc((int)(x+size+15), (int)(y-40), 50, 70, -135, -90);
-			g2.drawArc((int)(x+size+15)+4, (int)(y-40), 50, 70, -135, -90);
+			g2.drawArc((int)x+35, (int)y-40, 50, 70, -135, -90);
+			g2.drawArc((int)x+39, (int)y-40, 50, 70, -135, -90);
 		
 		} else {
-			g2.setColor(Color.RED);
-			g2.drawArc((int)x-15, (int)(y+size-10), 70, 50, 45, 90);
-			g2.drawArc((int)x-15, (int)(y+size-9), 70, 50, 45, 90);
-			g2.drawArc((int)x-15, (int)(y+size-8), 70, 50, 45, 90);
-			g2.drawArc((int)x-15, (int)(y+size-7), 70, 50, 45, 90);
+			
+			g2.setColor(color);
+			g2.drawArc((int)x-15, (int)y+11, 70, 50, 45, 90);
+			g2.drawArc((int)x-15, (int)y+12, 70, 50, 45, 90);
+			g2.drawArc((int)x-15, (int)y+13, 70, 50, 45, 90);
 			g2.setColor(Color.BLACK);
-			g2.drawArc((int)x-15, (int)(y+size-10), 70, 50, 45, 90);
-			g2.drawArc((int)x-15, (int)(y+size-6), 70, 50, 45, 90);
+			g2.drawArc((int)x-15, (int)y+10, 70, 50, 45, 90);
+			g2.drawArc((int)x-15, (int)y+14, 70, 50, 45, 90);
 		}
 	}
 
@@ -75,28 +80,12 @@ public class Wire implements Node {
 	}
 
 	public boolean contains(Point2D p) {
-		Rectangle2D rectangle = new Rectangle2D.Double(
-	    		x, y, size*2, size*2);
+		Rectangle2D rectangle = new Rectangle2D.Double(x-5, y-25, size, size);
 	    return rectangle.contains(p);
 	}
 
 	public Rectangle2D getBounds() {
-	    return new Rectangle2D.Double(
-	            x, y, size*2, size*2);
-	}
-
-	public Point2D getConnectionPoint(Point2D other) {
-		double centerX = x + size / 2;
-		double centerY = y + size / 2;
-		double dx = other.getX() - centerX;
-		double dy = other.getY() - centerY;
-		double distance = Math.sqrt(dx * dx + dy * dy);
-
-		if (distance == 0) return other;
-		
-		else return new Point2D.Double(
-          centerX + dx * (size / 2) / distance,
-          centerY + dy * (size / 2) / distance);
+	    return new Rectangle2D.Double(x-5, y-25, size, size);
 	}
 
  	public String getComponent() {

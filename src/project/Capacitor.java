@@ -7,26 +7,31 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-
+/**
+ * @author Niklas Andersson
+ * @author Andreas Östlin
+ * 
+ */
 @SuppressWarnings("serial")
 public class Capacitor implements Node {
-	 private boolean up,right,left = false;
-	 private String component;
- 	 private String orientation;
- 	 private double price;
- 	 private double x;
- 	 private double y;
- 	 private double size;
- 	 private Color color;  
- 	 private static final int DEFAULT_SIZE = 20;
-	
-	public Capacitor(Color aColor) {
+
+	private String component;
+ 	private String orientation;
+ 	private double price;
+ 	private double x;
+ 	private double y;
+ 	private double size;
+ 	private Color color;  
+ 	private static final int DEFAULT_SIZE = 50;
+ 	private boolean up,right,left = false;
+
+	public Capacitor() {
 		component = "Capacitor";
 		price = 4.55;
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
-		color = aColor;
+		color = new Color(255, 100, 50);
 		orientation = "horizontal";
 	}
 
@@ -48,32 +53,28 @@ public class Capacitor implements Node {
 	}
 
 	public void draw(Graphics2D g2) {
+		
 		if(orientation == "vertical") {
-			Ellipse2D.Double base = new Ellipse2D.Double(x+size, y-12, 14, 14);
-			Line2D.Double line1 = new Line2D.Double();
-			line1.setLine(x+29, y-12, x+size*2+6, y-30);
-			Line2D.Double line2 = new Line2D.Double();
-			line2.setLine(x+29, y+3, x+size*2+6, y+size);
-			g2.setColor(new Color(255, 150, 50));
+
+			Ellipse2D.Double base = new Ellipse2D.Double(x+20, y-12, 14, 14);
+
+			g2.setColor(color);
 			g2.fill(base);
 			g2.setColor(Color.BLACK);
 			g2.draw(base);
-			g2.draw(line1);
-			g2.draw(line2);
+			g2.draw(new Line2D.Double(x+29, y-12, x+46, y-30));
+			g2.draw(new Line2D.Double(x+29, y+3, x+46, y+20));
 		
 		} else {
 			
 			Ellipse2D.Double base = new Ellipse2D.Double(x+13, y, 14, 14);
-			Line2D.Double line1 = new Line2D.Double();
-			line1.setLine(x-7, y+size, x+size-6, y+size/2);
-			Line2D.Double line2 = new Line2D.Double();
-			line2.setLine(x+size+6, y+size/2, x+size*2+7, y+size);
-			g2.setColor(new Color(255, 150, 50));
+			
+			g2.setColor(color);
 			g2.fill(base);
 			g2.setColor(Color.BLACK);
 			g2.draw(base);
-			g2.draw(line1);
-			g2.draw(line2);
+			g2.draw(new Line2D.Double(x-7, y+20, x+14, y+10));
+			g2.draw(new Line2D.Double(x+26, y+10, x+47, y+20));
 		}
 	}
 
@@ -84,25 +85,13 @@ public class Capacitor implements Node {
 
 	public boolean contains(Point2D p) {
 		Rectangle2D rectangle = new Rectangle2D.Double(
-	    		x, y, size*2, size*2);
+	    		x-5, y-25, size, size);
 	    return rectangle.contains(p);
 	}
 
 	public Rectangle2D getBounds() {
 	    return new Rectangle2D.Double(
-	            x, y, size*2, size*2);
-	}
-
-	public Point2D getConnectionPoint(Point2D other) {
-		double centerX = x + size / 2;
-		double centerY = y + size / 2;
-		double dx = other.getX() - centerX;
-		double dy = other.getY() - centerY;
-		double distance = Math.sqrt(dx * dx + dy * dy);
-		if (distance == 0) return other;
-		else return new Point2D.Double(
-          centerX + dx * (size / 2) / distance,
-          centerY + dy * (size / 2) / distance);
+	            x-5, y-25, size, size);
 	}
 
  	public String getComponent() {
@@ -148,7 +137,7 @@ public class Capacitor implements Node {
  		 }
  		 return false;
  	 }
-	
+ 	 
  	 public void setConnection(boolean a, String b) {
  		 if(b.equals("left")) {left = a;}
  		 if(b.equals("right")) {right = a;}

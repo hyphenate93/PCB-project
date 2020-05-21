@@ -6,9 +6,13 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 
 /**
- * A node in a graph.
+ * 
+ * @author Niklas Andersson
+ * @author Andreas Östlin
+ *
  */
 public interface Node extends Serializable, Cloneable {
+
 	/**
 	 * Draw the node.
 	 * 
@@ -32,14 +36,6 @@ public interface Node extends Serializable, Cloneable {
 	 */
 	boolean contains(Point2D aPoint);
 
-	/**
-	 * Get the best connection point to connect this node with another node. This
-	 * should be a point on the boundary of the shape of this node.
-	 * 
-	 * @param aPoint an exterior point that is to be joined with this node
-	 * @return the recommended connection point
-	 */
-	Point2D getConnectionPoint(Point2D aPoint);
 
 	/**
 	 * Get the bounding rectangle of the shape of this node
@@ -48,25 +44,40 @@ public interface Node extends Serializable, Cloneable {
 	 */
 	Rectangle2D getBounds();
 
+	/**
+	 * 
+	 * @return name of component
+	 */
 	String getComponent();
 
+	Object clone();
+	
 	double getPrice();
 
 	double getX();
 
 	double getY();
 	
-	boolean getConnection();
-	
-	void setConnection(boolean a, String b);
-	
 	void setX(double a);
 
 	void setY(double a);
 	
-	void setOrientation(String s);
-
-	String getOrientation();
+	/**
+	 * Check whether component is connected or not
+	 * 
+	 * @return true if component is connected to another component
+	 */
+	boolean getConnection();
 	
-	Object clone();
+	/**
+	 * Set component as connected or not connected
+	 * 
+	 * @param a true if component is connected to another
+	 * @param b Location of connection
+	 */
+	void setConnection(boolean a, String b);
+	
+	void setOrientation(String s);
+	
+	String getOrientation();
 }

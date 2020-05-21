@@ -6,16 +6,20 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * A panel to draw a graph
+ * @author Niklas Andersson
+ * @author Andreas Östlin
+ * 
+ * GraphPanel contains the functionalities of
+ * the nodes.
  */
 @SuppressWarnings("serial")
-public class GraphPanel extends JComponent {
+public class BreadBoardInteractions extends JComponent {
 	/**
       Constructs a graph.
       @param aToolBar the tool bar with the node and edge tools
       @param aGraph the graph to be displayed and edited
 	*/
-	public GraphPanel(ToolBar aToolBar, Graph aGraph)
+	public BreadBoardInteractions(ToolBar aToolBar, BreadBoard aGraph)
 	{
 		toolBar = aToolBar;
 		graph = aGraph;
@@ -78,7 +82,7 @@ public class GraphPanel extends JComponent {
 					int yCord = (int) (newNode.getY() + (double) 50 / 2) / 50 * 50;
 					newNode.setX((xCord+5));
 					newNode.setY((yCord+5));
-					graph.setOccupied((int)(newNode.getX())/50,(int)(newNode.getY())/50,newNode);
+					graph.setOccupied((int)((newNode.getX())/50),(int)((newNode.getY())/50), newNode);
 					selected = newNode;
 					graph.resetConnections();
 					dragStartPoint = mousePoint;
@@ -182,7 +186,7 @@ public class GraphPanel extends JComponent {
 		repaint();
 		 
 	}
-
+	
 	/**
 	 * Draws a single "grabber", a filled square
 	 * 
@@ -192,39 +196,17 @@ public class GraphPanel extends JComponent {
 	 */
 	public static void drawGrabber(Graphics2D g2, double x, double y) {
 		final int SIZE = 5;
-		Color oldColor = g2.getColor();
 		g2.setColor(PURPLE);
 		g2.fill(new Rectangle2D.Double(x - SIZE / 2, y - SIZE / 2, SIZE, SIZE));
-		g2.setColor(oldColor);
-	}
-
-	
-	public static void rotateArrow(Graphics2D g2, int x, int y) {
-		Color oldColor = g2.getColor();
 		g2.setColor(Color.BLACK);
-		g2.drawArc(x, y, 20, 20, 230, -200);
-		g2.draw(new Line2D.Double(x+20, y, x+20, y + 5));
-		g2.draw(new Line2D.Double(x+15, y + 8, x+20, y + 5));
-		g2.setColor(oldColor);
 	}
-	
-	public static void checkConnection(Graphics2D g2, int x, int y) {
-		Color oldColor = g2.getColor();
-		g2.setColor(Color.YELLOW);
-		g2.fill(new Ellipse2D.Double(x, y, 20, 20));
-		g2.setColor(Color.BLACK);
-		g2.draw(new Ellipse2D.Double(x, y, 20, 20));
-		g2.fillRect(x + 5, y + 18, 11, 5);
-		g2.setColor(oldColor);
-	}
-	
 	
 	public Dimension getPreferredSize() {
 		Rectangle2D bounds = graph.getBounds((Graphics2D) getGraphics());
 		return new Dimension((int) bounds.getMaxX(), (int) bounds.getMaxY());
 	}
 
-	private Graph graph;
+	private BreadBoard graph;
 	private ToolBar toolBar;
 	private Point2D dragStartPoint;
 	private Rectangle2D dragStartBounds;

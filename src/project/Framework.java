@@ -9,13 +9,13 @@ import javax.swing.*;
    This frame shows the toolbar and the graph.
 */
 @SuppressWarnings("serial")
-public class GraphFrame extends JFrame
+public class Framework extends JFrame
 {
 	/**
       Constructs a graph frame that displays a given graph.
       @param graph the graph to display
 	 */
-   	public GraphFrame(final Graph graph)
+   	public Framework(final BreadBoard graph)
 	{
    		setSize(FRAME_WIDTH, FRAME_HEIGHT);
    		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -86,7 +86,7 @@ public class GraphFrame extends JFrame
    	private void constructFrameComponents()
    	{
    		toolBar = new ToolBar(graph);
-   		panel = new GraphPanel(toolBar, graph);
+   		panel = new BreadBoardInteractions(toolBar, graph);
    		scrollPane = new JScrollPane(panel);
    		text = new JTextArea(5,10); 
    		setupText();
@@ -114,7 +114,7 @@ public class GraphFrame extends JFrame
         	File file = fileChooser.getSelectedFile();
             ObjectInputStream in = new ObjectInputStream(
                new FileInputStream(file));
-            graph = (Graph) in.readObject();
+            graph = (BreadBoard) in.readObject();
             in.close();
             this.remove(scrollPane);
             this.remove(toolBar);
@@ -194,8 +194,8 @@ public class GraphFrame extends JFrame
     }
    
     private static JTextArea text;
-    private Graph graph;
-    private GraphPanel panel;
+    private BreadBoard graph;
+    private BreadBoardInteractions panel;
     private JScrollPane scrollPane;
     private ToolBar toolBar;
 

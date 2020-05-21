@@ -8,10 +8,13 @@ import java.util.*;
 import java.util.List;
 
 /**
+ * @author Niklas Andersson
+ * @author Andreas Östlin
+ * 
  * A graph consisting of selectable nodes.
  */
 @SuppressWarnings("serial")
-public abstract class Graph implements Serializable {
+public abstract class BreadBoard implements Serializable {
 
 	private double total;
 	private int resistorAmount;
@@ -28,7 +31,7 @@ public abstract class Graph implements Serializable {
 	/**
 	 * Constructs a graph with no nodes.
 	 */
-	public Graph() {
+	public BreadBoard() {
 		nodes = new ArrayList<Node>();
 
 		for (int i = 0; i < 14; i++) {
@@ -46,8 +49,7 @@ public abstract class Graph implements Serializable {
 	 * @param p the desired location
 	 */
 	public boolean add(Node n, Point2D p) {
-		Rectangle2D bounds = n.getBounds();
-		n.translate(p.getX() - bounds.getX(), p.getY() - bounds.getY());
+		n.translate(p.getX() - 24, p.getY());
 		nodes.add(n);
 		return true;
 	}
@@ -67,36 +69,6 @@ public abstract class Graph implements Serializable {
 		return null;
 	}
 
-	/**
-	 * Draws the PCB-Board and the components
-	 * 
-	 * @param g2 the graphics context
-	 */
-	public void draw(Graphics2D g2) {
-		
-		g2.setColor(Color.BLACK);
-		g2.fillRoundRect(48, 48, (squareSize * 14) + 4, (squareSize * 10) + 4, 10, 10);
-		g2.setColor(new Color(0, 160, 0));
-		g2.fillRoundRect(50, 50, squareSize * 14, squareSize * 10, 10, 10);
-		g2.setColor(Color.BLACK);
-		for (int i = 0; i < 13; i++) {
-			for (int j = 0; j < 10; j++) {
-				g2.setColor(new Color(198, 165, 48));
-				g2.fillRoundRect(97 + squareSize * i, 72 + squareSize * j, 7, 7, 3, 3);
-				g2.setColor(Color.BLACK);
-				g2.fillRoundRect(98 + squareSize * i, 73 + squareSize * j, 4, 4, 3, 3);
-			}
-		}
-
-		for (Node n : nodes) {
-			g2.setColor(Color.BLACK);
-			n.draw(g2);
-			if(n.getConnection() == true) {
-				g2.setColor(Color.YELLOW);
-				g2.fillRoundRect((int)n.getX(), (int)n.getY(), 10, 10,10,10);
-			}	
-		}
-	}
 
 	/**
 	 * Removes a node
@@ -142,50 +114,23 @@ public abstract class Graph implements Serializable {
 	}
 
 	public int getComponentAmount() {
-		int componentAmount = resistorAmount + capacitorAmount + inductorAmount + potAmount + wireAmount;
+		int componentAmount = resistorAmount 
+							+ capacitorAmount 
+							+ inductorAmount 
+							+ potAmount 
+							+ wireAmount;
 		return componentAmount;
 	}
 
-	public int getResistorAmount() {
-		return this.resistorAmount;
+	public void updateText() {
+		Framework.getText()
+				.setText("ShoppingList: \n\n\n" 
+						+ resistorAmount + "x Resistor\n" + capacitorAmount + "x Capacitor\n"
+						+ inductorAmount + "x Inductor\n" + potAmount + "x Potentiometer\n" 
+						+ wireAmount + "x Wire\n\n\n\n\n\n\n\n\n" 
+						+ "total cost: \n" + getPrice() + "$");
 	}
-
-	public void setResistorAmount(int amount) {
-		this.resistorAmount = amount;
-	}
-
-	public int getCapacitorAmount() {
-		return this.capacitorAmount;
-	}
-
-	public void setCapacitorAmount(int amount) {
-		this.capacitorAmount = amount;
-	}
-
-	public int getInductorAmount() {
-		return this.inductorAmount;
-	}
-
-	public void setInductorAmount(int amount) {
-		this.inductorAmount = amount;
-	}
-
-	public int getPotAmount() {
-		return this.potAmount;
-	}
-
-	public void setPotAmount(int amount) {
-		this.potAmount = amount;
-	}
-
-	public int getWireAmount() {
-		return this.wireAmount;
-	}
-
-	public void setWireAmount(int amount) {
-		this.wireAmount = amount;
-	}
-
+	
 	public void setAmount() {
 
 		int resistor = 0;
@@ -341,13 +286,75 @@ public abstract class Graph implements Serializable {
 			}
 		}
 	}
+	
+	public int getResistorAmount() {
+		return this.resistorAmount;
+	}
 
-	public void updateText() {
-		GraphFrame.getText()
-				.setText("ShoppingList: \n\n\n" 
-						+ resistorAmount + "x Resistor\n" + capacitorAmount + "x Capacitor\n"
-						+ inductorAmount + "x Inductor\n" + potAmount + "x Potentiometer\n" 
-						+ wireAmount + "x Wire\n\n\n\n\n\n\n\n\n" 
-						+ "total cost: \n" + getPrice() + "$");
+	public void setResistorAmount(int amount) {
+		this.resistorAmount = amount;
+	}
+
+	public int getCapacitorAmount() {
+		return this.capacitorAmount;
+	}
+
+	public void setCapacitorAmount(int amount) {
+		this.capacitorAmount = amount;
+	}
+
+	public int getInductorAmount() {
+		return this.inductorAmount;
+	}
+
+	public void setInductorAmount(int amount) {
+		this.inductorAmount = amount;
+	}
+
+	public int getPotAmount() {
+		return this.potAmount;
+	}
+
+	public void setPotAmount(int amount) {
+		this.potAmount = amount;
+	}
+
+	public int getWireAmount() {
+		return this.wireAmount;
+	}
+
+	public void setWireAmount(int amount) {
+		this.wireAmount = amount;
+	}
+	
+	/**
+	 * Draws the PCB-Board and the components
+	 * 
+	 * @param g2 the graphics context
+	 */
+	public void draw(Graphics2D g2) {
+		
+		g2.setColor(Color.BLACK);
+		g2.fillRoundRect(48, 48, (squareSize * 14) + 4, (squareSize * 10) + 4, 10, 10);
+		g2.setColor(new Color(0, 160, 0));
+		g2.fillRoundRect(50, 50, squareSize * 14, squareSize * 10, 10, 10);
+		g2.setColor(Color.BLACK);
+		for (int i = 0; i < 13; i++) {
+			for (int j = 0; j < 10; j++) {
+				g2.setColor(new Color(198, 165, 48));
+				g2.fillRoundRect(97 + squareSize * i, 72 + squareSize * j, 7, 7, 3, 3);
+				g2.setColor(Color.BLACK);
+				g2.fillRoundRect(98 + squareSize * i, 73 + squareSize * j, 4, 4, 3, 3);
+			}
+		}
+
+		for (Node n : nodes) {
+			g2.setColor(Color.BLACK);
+			n.draw(g2);
+			if(n.getConnection() == true) {
+				g2.setColor(Color.YELLOW);
+				g2.fillRoundRect((int)n.getX(), (int)n.getY(), 10, 10,10,10);
+			}	
+		}
 	}
 }

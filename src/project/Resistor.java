@@ -6,6 +6,11 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * @author Niklas Andersson
+ * @author Andreas Östlin
+ * 
+ */
 @SuppressWarnings("serial")
 public class Resistor implements Node {
 	
@@ -16,20 +21,20 @@ public class Resistor implements Node {
  	private double y;
  	private double size;
  	private Color color;  
- 	private static final int DEFAULT_SIZE = 20;
+ 	private static final int DEFAULT_SIZE = 50;
  	private boolean up,right,left = false;
  	
 	/**
    		Construct a circle node with a given size and color.
     	@param aColor the fill color
 	*/
-	public Resistor(Color aColor) {
+	public Resistor() {
 		component = "Resistor"; 
 		price = 1.99;
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
-		color = aColor;
+		color = new Color(255, 100, 50);
 		orientation = "horizontal";
 	}
 
@@ -53,62 +58,42 @@ public class Resistor implements Node {
 	public void draw(Graphics2D g2) {
 		if(orientation == "vertical") {
 
-			g2.draw(new Line2D.Double(x+size+25, y-30, x+size+25, y+size));
-			g2.fillRoundRect((int)(x+size+19), (int)y-26, 2+(int)size/2, 2+(int)size*2, 10, 10);
-			Color oldColor = g2.getColor();
+			g2.draw(new Line2D.Double(x+45, y-30, x+45, y+20));
+			g2.fillRoundRect((int)x+39, (int)y-26, 12, 42, 10, 10);
 			g2.setColor(color);
-			g2.fillRoundRect((int)(x+size+20), (int)y-25, (int)size/2, (int)size*2, 10, 10);
-			g2.setColor(oldColor);
-			g2.fillRoundRect((int)(x+size+19), (int)y-15, 2+(int)size/2, 3, 1, 1);
-			g2.fillRoundRect((int)(x+size+19), (int)y+5, 2+(int)size/2, 3, 1, 1);
-			g2.fillRoundRect((int)(x+size+19), (int)y, 2+(int)size/2, 3, 1, 1);
-		}
-		else {
+			g2.fillRoundRect((int)x+40, (int)y-25, 10, 40, 10, 10);
+			g2.setColor(Color.BLACK);
+			g2.fillRoundRect((int)x+39, (int)y-15, 12, 3, 1, 1);
+			g2.fillRoundRect((int)x+39, (int)y+5, 12, 3, 1, 1);
+			g2.fillRoundRect((int)x+39, (int)y, 12, 3, 1, 1);
+		
+		} else {
 
-			g2.draw(new Line2D.Double(x-6, y+size, x+size+26, y+size));
-			g2.fillRoundRect((int)x-1, (int)y-1+15, 2+(int)size*2, 2+(int)size/2, 10, 10);
-			Color oldColor = g2.getColor();
+			g2.draw(new Line2D.Double(x-6, y+20, x+46, y+20));
+			g2.fillRoundRect((int)x-1, (int)y+14, 42, 12, 10, 10);
 			g2.setColor(color);
-			g2.fillRoundRect((int)x, (int)y+15, (int)size*2, (int)size/2, 10, 10);
-			g2.setColor(oldColor);
-			g2.fillRoundRect((int)x+10, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
-			g2.fillRoundRect((int)x+25, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
-			g2.fillRoundRect((int)x+30, (int)y-1+15, 3, 2+(int)size/2, 1, 1);
+			g2.fillRoundRect((int)x, (int)y+15, 40, 10, 10, 10);
+			g2.setColor(Color.BLACK);
+			g2.fillRoundRect((int)x+10, (int)y+14, 3, 12, 1, 1);
+			g2.fillRoundRect((int)x+25, (int)y+14, 3, 12, 1, 1);
+			g2.fillRoundRect((int)x+30, (int)y+14, 3, 12, 1, 1);
 		}
 	}
 
-	public void translate(double dx, double dy)
-	{
+	public void translate(double dx, double dy) {
 		x += dx;
 		y += dy;
 	}
 
-	public boolean contains(Point2D p)
-	{
-		Rectangle2D rectangle = new Rectangle2D.Double(
-				x, y, size*2, size*2);
+	public boolean contains(Point2D p) {
+		Rectangle2D rectangle = new Rectangle2D.Double(x-5, y-25, size, size);
+		
 		return rectangle.contains(p);
 	}
 
-	public Rectangle2D getBounds()
-	{
-		return new Rectangle2D.Double(
-				x, y, size*2, size*2);
+	public Rectangle2D getBounds() {
+		return new Rectangle2D.Double(x-5, y-25, size, size);
 	}
-
-	public Point2D getConnectionPoint(Point2D other)
-	{
-		double centerX = x + size / 2;
-		double centerY = y + size / 2;
-		double dx = other.getX() - centerX;
-		double dy = other.getY() - centerY;
-		double distance = Math.sqrt(dx * dx + dy * dy);
-		if (distance == 0) return other;
-		else return new Point2D.Double(
-				centerX + dx * (size / 2) / distance,
-				centerY + dy * (size / 2) / distance);
-	}
- 
 
 	public String getComponent() {
 		return component;

@@ -15,7 +15,7 @@ public class ToolBar extends JPanel
     /**
       Constructs a tool bar with no icons.
      */
-	public ToolBar(Graph graph)
+	public ToolBar(BreadBoard graph)
 	{
 		group = new ButtonGroup();
 		tools = new ArrayList<Object>();
@@ -27,10 +27,10 @@ public class ToolBar extends JPanel
             public int getIconWidth() { return BUTTON_SIZE; }
             public void paintIcon(Component c, Graphics g, int x, int y) {
             	Graphics2D g2 = (Graphics2D) g;
-            	GraphPanel.drawGrabber(g2, x + OFFSET, y + OFFSET);
-            	GraphPanel.drawGrabber(g2, x + OFFSET, y + BUTTON_SIZE - OFFSET);
-            	GraphPanel.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + OFFSET);
-            	GraphPanel.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + BUTTON_SIZE - OFFSET);
+            	BreadBoardInteractions.drawGrabber(g2, x + OFFSET, y + OFFSET);
+            	BreadBoardInteractions.drawGrabber(g2, x + OFFSET, y + BUTTON_SIZE - OFFSET);
+            	BreadBoardInteractions.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + OFFSET);
+            	BreadBoardInteractions.drawGrabber(g2, x + BUTTON_SIZE - OFFSET, y + BUTTON_SIZE - OFFSET);
             }
         });
 		
@@ -47,7 +47,7 @@ public class ToolBar extends JPanel
 			public int getIconWidth() { return BUTTON_SIZE; }
 			public void paintIcon(Component c, Graphics g, int x, int y) {
 				Graphics2D g2 = (Graphics2D) g;
-				GraphPanel.rotateArrow(g2, x + 2, y + 2);   
+				rotateArrow(g2, x + 2, y + 2);   
 			}	    
 		});
     	      
@@ -64,7 +64,7 @@ public class ToolBar extends JPanel
 			public int getIconWidth() { return BUTTON_SIZE; }
 			public void paintIcon(Component c, Graphics g, int x, int y) {
 				Graphics2D g2 = (Graphics2D) g;
-				GraphPanel.checkConnection(g2, x + 2, y + 2);   
+				checkConnection(g2, x + 2, y + 2);   
 			}	    
 		});
     	      
@@ -110,15 +110,19 @@ public class ToolBar extends JPanel
             	double width = n.getBounds().getWidth();
             	double height = n.getBounds().getHeight();
             	Graphics2D g2 = (Graphics2D) g;
-            	double scaleX = (BUTTON_SIZE - OFFSET)/ width;
-            	double scaleY = (BUTTON_SIZE - OFFSET)/ height;
+            	double scaleX = (BUTTON_SIZE + OFFSET)/ width;
+            	double scaleY = (BUTTON_SIZE + OFFSET)/ height;
             	double scale = Math.min(scaleX, scaleY);
 
             
             	AffineTransform oldTransform = g2.getTransform();
             	g2.translate(x, y);
             	g2.scale(scale, scale);
-            	g2.translate(Math.max((height - width) / 2, 0), Math.max((width - height) / 2, 0));
+            	if(n.getComponent().equals("Potentiometer")){
+            		g2.translate(Math.max((height - width) / 2, 0), (Math.max((width - height) / 2, 0))+20);
+            	} else {	
+            		g2.translate(Math.max((height - width) / 2, 0), Math.max((width - height) / 2, 0));
+            	}
             	g2.setColor(Color.black);
             	n.draw(g2);
             	g2.setTransform(oldTransform);
@@ -130,6 +134,25 @@ public class ToolBar extends JPanel
 		tools.add(n);
 	}
 
+	
+	public static void rotateArrow(Graphics2D g2, int x, int y) {
+		
+		g2.setColor(Color.BLACK);
+		g2.drawArc(x, y, 20, 20, 230, -200);
+		g2.draw(new Line2D.Double(x+20, y, x+20, y + 5));
+		g2.draw(new Line2D.Double(x+15, y + 8, x+20, y + 5));
+		g2.setColor(Color.BLACK);
+	}
+	
+	public static void checkConnection(Graphics2D g2, int x, int y) {
+		
+		g2.setColor(Color.YELLOW);
+		g2.fill(new Ellipse2D.Double(x, y, 20, 20));
+		g2.setColor(Color.BLACK);
+		g2.draw(new Ellipse2D.Double(x, y, 20, 20));
+		g2.fillRect(x + 5, y + 18, 11, 5);
+		g2.setColor(Color.BLACK);
+	}
 
 	public Dimension getPreferredSize() {
 		return new Dimension(100, 100);

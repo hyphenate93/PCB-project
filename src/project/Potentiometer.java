@@ -6,26 +6,32 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+/**
+ * 
+ * @author Niklas Andersson
+ * @author Andreas Östlin
+ * 
+ */
 @SuppressWarnings("serial")
 public class Potentiometer implements Node {
-	 private boolean up,right,left = false;
-		private String component;
-		private String orientation;
-		private double price;
-		private double x;
-		private double y;
-		private double size;
-		private Color color;  
-		private static final int DEFAULT_SIZE = 20;
+
+	private String component;
+	private String orientation;
+	private double price;
+	private double x;
+	private double y;
+	private double size;
+	private Color color;  
+	private static final int DEFAULT_SIZE = 50;
+	private boolean up,right,left = false;
 	
-	
-	public Potentiometer(Color aColor) {
+	public Potentiometer() {
 		component = "Potentiometer";
 		price = 4.55;
 		size = DEFAULT_SIZE;
 		x = 0;
 		y = 0;
-		color = aColor;
+		color = Color.BLUE;
 		price = 7.99;
 		orientation = "horizontal";
 	}
@@ -50,27 +56,22 @@ public class Potentiometer implements Node {
 	public void draw(Graphics2D g2) {
 		if(orientation == "vertical") {
 			
+			g2.fillRoundRect((int)x-1, (int)y-21, 44, 44, 10, 10);
+			g2.setColor(color);
+			g2.fillRoundRect((int)x, (int)y-20, 40, 40, 10, 10);
 			g2.setColor(Color.BLACK);
-			g2.fillRoundRect((int)x-1, (int)y-1, (int)(size+2)*2, (int)(size+2)*2, 10, 10);
-			g2.setColor(this.color);
-			g2.fillRoundRect((int)x, (int)y, (int)size*2, (int)size*2, 10, 10);
-			Rectangle2D.Double ok = new Rectangle2D.Double(x+10, y+18, 18, 5);
-			Ellipse2D.Double circle = new Ellipse2D.Double(x+5, y+5, 30, 30);
-			g2.setColor(Color.BLACK);
-			g2.draw(ok);
-			g2.draw(circle);
+			g2.draw(new Rectangle2D.Double(x+18, y-10, 5, 18));
+			g2.draw(new Ellipse2D.Double(x+5, y-15, 30, 30));
 		
 		} else {
 			
+			g2.fillRoundRect((int)x-1, (int)y-21, 44, 44, 10, 10);
+			g2.setColor(color);
+			g2.fillRoundRect((int)x, (int)y-20, 40, 40, 10, 10);
 			g2.setColor(Color.BLACK);
-			g2.fillRoundRect((int)x-1, (int)y-1, (int)(size+2)*2, (int)(size+2)*2, 10, 10);
-			g2.setColor(this.color);
-			g2.fillRoundRect((int)x, (int)y, (int)size*2, (int)size*2, 10, 10);
-			Rectangle2D.Double ok = new Rectangle2D.Double(x+18, y+10, 5, 18);
-			Ellipse2D.Double circle = new Ellipse2D.Double(x+5, y+5, 30, 30);
+			g2.draw(new Rectangle2D.Double(x+10, y-2, 18, 5));
+			g2.draw(new Ellipse2D.Double(x+5, y-15, 30, 30));
 			g2.setColor(Color.BLACK);
-			g2.draw(ok);
-			g2.draw(circle);
 		}
 	}
 
@@ -80,25 +81,13 @@ public class Potentiometer implements Node {
 	}
 
 	public boolean contains(Point2D p) {
-		Rectangle2D rectangle = new Rectangle2D.Double(x, y, size*2, size*2);
-	    return rectangle.contains(p);
+		Rectangle2D rectangle = new Rectangle2D.Double(x-5, y-25, size, size);
+
+		return rectangle.contains(p);
 	}
 
 	public Rectangle2D getBounds() {
-	    return new Rectangle2D.Double(
-	            x, y, size*2, size*2);
-	}
-
-	public Point2D getConnectionPoint(Point2D other) {
-		double centerX = x + size / 2;
-		double centerY = y + size / 2;
-		double dx = other.getX() - centerX;
-		double dy = other.getY() - centerY;
-		double distance = Math.sqrt(dx * dx + dy * dy);
-		if (distance == 0) return other;
-		else return new Point2D.Double(
-          centerX + dx * (size / 2) / distance,
-          centerY + dy * (size / 2) / distance);
+	    return new Rectangle2D.Double(x-5, y-25, size, size);
 	}
 
  	public String getComponent() {
