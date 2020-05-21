@@ -325,15 +325,15 @@ public abstract class Graph implements Serializable {
 					n.setConnection(true, "up");			
 				}
 			}	
-				
+				if(n.getOrientation().equals("vertical")) {
 			if(getOccupied(xCheck + 1, yCheck - 1) != null) {
-
+			
 				if(getOccupied(xCheck + 1, yCheck - 1).getOrientation().equals("horizontal")) {
 					n.setConnection(true, "up");
 				}
 			}
 			
-		}	
+		}	}
 		System.out.println("Found:");
 		for (Node n : nodes) {
 			if (n.getConnection() == true) {

@@ -3,7 +3,7 @@ package project;
 import javax.swing.JFrame;
 
 
-public class Framework
+public class PCB
 {
 	
 	public static void main(String[] args) {
