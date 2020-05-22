@@ -353,7 +353,7 @@ public abstract class BreadBoard implements Serializable {
 			n.draw(g2);
 			if(n.getConnection() == true) {
 				g2.setColor(Color.YELLOW);
-				g2.fillRoundRect((int)n.getX(), (int)n.getY(), 10, 10,10,10);
+				g2.fillRoundRect((int)n.getX()+40, (int)n.getY()+15, 10, 10,10,10);
 			}	
 		}
 	}

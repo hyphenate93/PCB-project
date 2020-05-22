@@ -10,8 +10,7 @@ import javax.swing.*;
    Exactly one icon is selected at any time.
 */
 @SuppressWarnings("serial")
-public class ToolBar extends JPanel
-{
+public class ToolBar extends JPanel {
     /**
       Constructs a tool bar with no icons.
      */
@@ -133,7 +132,6 @@ public class ToolBar extends JPanel
 		add(button);
 		tools.add(n);
 	}
-
 	
 	public static void rotateArrow(Graphics2D g2, int x, int y) {
 		
@@ -157,7 +155,6 @@ public class ToolBar extends JPanel
 	public Dimension getPreferredSize() {
 		return new Dimension(100, 100);
 	}
-   
    
 	private ButtonGroup group;
 	private ArrayList<Object> tools;

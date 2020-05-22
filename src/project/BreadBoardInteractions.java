@@ -23,7 +23,6 @@ public class BreadBoardInteractions extends JComponent {
 	{
 		toolBar = aToolBar;
 		graph = aGraph;
-		setBackground(Color.WHITE);
 
 		addMouseListener(new MouseAdapter() {
 		public void mousePressed(MouseEvent event) {
