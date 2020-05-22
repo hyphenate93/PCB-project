@@ -10,8 +10,7 @@ import java.util.List;
 /**
  * @author Niklas Andersson
  * @author Andreas Östlin
- * 
- * A graph consisting of selectable nodes.
+ * @invariant BreadBoard != null A Breadboard consisting of selectable nodes.
  */
 @SuppressWarnings("serial")
 public abstract class BreadBoard implements Serializable {
@@ -29,7 +28,7 @@ public abstract class BreadBoard implements Serializable {
 	private ArrayList<Node> nodes;
 
 	/**
-	 * Constructs a graph with no nodes.
+	 * Constructs a BreadBoard with null slots to represent empty.
 	 */
 	public BreadBoard() {
 		nodes = new ArrayList<Node>();
@@ -42,7 +41,7 @@ public abstract class BreadBoard implements Serializable {
 	}
 
 	/**
-	 * Adds a node to the graph so that the top left corner of the bounding
+	 * Adds a node to the Board so that the top left corner of the bounding
 	 * rectangle is at the given point.
 	 * 
 	 * @param n the node to add
@@ -69,7 +68,6 @@ public abstract class BreadBoard implements Serializable {
 		return null;
 	}
 
-
 	/**
 	 * Removes a node
 	 * 
@@ -80,7 +78,7 @@ public abstract class BreadBoard implements Serializable {
 	}
 
 	/**
-	 * Gets the smallest rectangle enclosing the graph
+	 * Gets the smallest rectangle enclosing the Board
 	 * 
 	 * @param g2 the graphics context
 	 * @return the bounding rectangle
@@ -98,14 +96,14 @@ public abstract class BreadBoard implements Serializable {
 	}
 
 	/**
-	 * Gets the node types of a particular graph type.
+	 * Gets the node types of a particular Board type.
 	 * 
 	 * @return an array of node prototypes
 	 */
 	public abstract Node[] getNodePrototypes();
 
 	/**
-	 * Gets the nodes of this graph.
+	 * Gets the nodes of this Board.
 	 * 
 	 * @return an unmodifiable list of the nodes
 	 */
@@ -114,23 +112,17 @@ public abstract class BreadBoard implements Serializable {
 	}
 
 	public int getComponentAmount() {
-		int componentAmount = resistorAmount 
-							+ capacitorAmount 
-							+ inductorAmount 
-							+ potAmount 
-							+ wireAmount;
+		int componentAmount = resistorAmount + capacitorAmount + inductorAmount + potAmount + wireAmount;
 		return componentAmount;
 	}
 
 	public void updateText() {
 		Framework.getText()
-				.setText("ShoppingList: \n\n\n" 
-						+ resistorAmount + "x Resistor\n" + capacitorAmount + "x Capacitor\n"
-						+ inductorAmount + "x Inductor\n" + potAmount + "x Potentiometer\n" 
-						+ wireAmount + "x Wire\n\n\n\n\n\n\n\n\n" 
-						+ "total cost: \n" + getPrice() + "$");
+				.setText("ShoppingList: \n\n\n" + resistorAmount + "x Resistor\n" + capacitorAmount + "x Capacitor\n"
+						+ inductorAmount + "x Inductor\n" + potAmount + "x Potentiometer\n" + wireAmount
+						+ "x Wire\n\n\n\n\n\n\n\n\n" + "total cost: \n" + getPrice() + "$");
 	}
-	
+
 	public void setAmount() {
 
 		int resistor = 0;
@@ -187,10 +179,8 @@ public abstract class BreadBoard implements Serializable {
 	public void updatePrice() {
 		double price = 0.0;
 		for (Node n : nodes) {
-			if (n.getComponent().equals("Resistor") 
-					|| n.getComponent().equals("Capacitor")
-					|| n.getComponent().equals("Inductor") 
-					|| n.getComponent().equals("Potentiometer")
+			if (n.getComponent().equals("Resistor") || n.getComponent().equals("Capacitor")
+					|| n.getComponent().equals("Inductor") || n.getComponent().equals("Potentiometer")
 					|| n.getComponent().equals("Wire")) {
 
 				price = price + n.getPrice();
@@ -215,7 +205,7 @@ public abstract class BreadBoard implements Serializable {
 			return null;
 		}
 	}
-	
+
 	public void resetConnections() {
 		for (Node n : nodes) {
 			n.setConnection(false, "left");
@@ -224,61 +214,67 @@ public abstract class BreadBoard implements Serializable {
 		}
 	}
 
+	/**
+	 * iterates through all component nodes, checking for valid connections in
+	 * occupied array
+	 */
 	public void setConnections() {
 
 		System.out.println("Finding Connections");
 
 		for (Node n : nodes) {
-			int xCheck = (int)(n.getX()+5) / 50;
-			int yCheck = (int)(n.getY()+5) / 50;
-	
-			//component to the left or under
-			if(n.getOrientation().equals("horizontal")) {
-				
-				if(getOccupied(xCheck - 1, yCheck) != null) {
-					n.setConnection(true, "left");			
+
+			// variables gets n x,y value and divide to get actual array integer value
+			int xCheck = (int) (n.getX() + 5) / 50;
+			int yCheck = (int) (n.getY() + 5) / 50;
+
+			// component to the left or under
+			if (n.getOrientation().equals("horizontal")) {
+
+				if (getOccupied(xCheck - 1, yCheck) != null) {
+					n.setConnection(true, "left");
 				}
-			} 	
-			
-			if(n.getOrientation().equals("horizontal")) {
-				if(getOccupied(xCheck - 1, yCheck + 1) != null) {
-					if(getOccupied(xCheck - 1, yCheck + 1).getOrientation().equals("vertical")) {
+			}
+
+			if (n.getOrientation().equals("horizontal")) {
+				if (getOccupied(xCheck - 1, yCheck + 1) != null) {
+					if (getOccupied(xCheck - 1, yCheck + 1).getOrientation().equals("vertical")) {
 						n.setConnection(true, "left");
 					}
 				}
 			}
-				
-			
+
 			// component to the right or under (vertical orientation)
-			if(getOccupied(xCheck + 1, yCheck) != null) {
-				
-				if(getOccupied(xCheck + 1, yCheck).getOrientation().equals("horizontal")) {	
-					n.setConnection(true, "right");
-				}
-			}	
-			if(getOccupied(xCheck, yCheck + 1) != null) {
-				if(getOccupied(xCheck, yCheck + 1).getOrientation().equals("vertical")) {
+			if (getOccupied(xCheck + 1, yCheck) != null) {
+
+				if (getOccupied(xCheck + 1, yCheck).getOrientation().equals("horizontal")) {
 					n.setConnection(true, "right");
 				}
 			}
-			
-			// Component over this one
-			if(n.getOrientation().equals("vertical")) {
-				
-				if(getOccupied(xCheck, yCheck - 1) != null) {
-	
-					n.setConnection(true, "up");			
+			if (getOccupied(xCheck, yCheck + 1) != null) {
+				if (getOccupied(xCheck, yCheck + 1).getOrientation().equals("vertical")) {
+					n.setConnection(true, "right");
 				}
-			}	
-				if(n.getOrientation().equals("vertical")) {
-			if(getOccupied(xCheck + 1, yCheck - 1) != null) {
-			
-				if(getOccupied(xCheck + 1, yCheck - 1).getOrientation().equals("horizontal")) {
+			}
+
+			// Component over this one
+			if (n.getOrientation().equals("vertical")) {
+
+				if (getOccupied(xCheck, yCheck - 1) != null) {
+
 					n.setConnection(true, "up");
 				}
 			}
-			
-		}	}
+			if (n.getOrientation().equals("vertical")) {
+				if (getOccupied(xCheck + 1, yCheck - 1) != null) {
+
+					if (getOccupied(xCheck + 1, yCheck - 1).getOrientation().equals("horizontal")) {
+						n.setConnection(true, "up");
+					}
+				}
+
+			}
+		}
 		System.out.println("Found:");
 		for (Node n : nodes) {
 			if (n.getConnection() == true) {
@@ -286,7 +282,7 @@ public abstract class BreadBoard implements Serializable {
 			}
 		}
 	}
-	
+
 	public int getResistorAmount() {
 		return this.resistorAmount;
 	}
@@ -326,14 +322,14 @@ public abstract class BreadBoard implements Serializable {
 	public void setWireAmount(int amount) {
 		this.wireAmount = amount;
 	}
-	
+
 	/**
 	 * Draws the PCB-Board and the components
 	 * 
 	 * @param g2 the graphics context
 	 */
 	public void draw(Graphics2D g2) {
-		
+
 		g2.setColor(Color.BLACK);
 		g2.fillRoundRect(48, 48, (squareSize * 14) + 4, (squareSize * 10) + 4, 10, 10);
 		g2.setColor(new Color(0, 160, 0));
@@ -351,10 +347,10 @@ public abstract class BreadBoard implements Serializable {
 		for (Node n : nodes) {
 			g2.setColor(Color.BLACK);
 			n.draw(g2);
-			if(n.getConnection() == true) {
+			if (n.getConnection() == true) {
 				g2.setColor(Color.YELLOW);
-				g2.fillRoundRect((int)n.getX()+40, (int)n.getY()+15, 10, 10,10,10);
-			}	
+				g2.fillRoundRect((int) n.getX() + 40, (int) n.getY() + 15, 10, 10, 10, 10);
+			}
 		}
 	}
 }
